@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n-key="services.pageTitle">Services | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Loading overlay styles */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 248, 248, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    
+    .loading-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #d4a574;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+    
+    .loading-text {
+      font-size: 18px;
+      color: #333;
+      font-weight: 500;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Hide the duplicate language selector buttons, exactly as in blog.html */
+    .language-selector {
+      display: none;
+    }
+  </style>
+</head>
+<body style="background-color: #FFF8F8;">
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" data-i18n-key="loading.text">Loading language...</div>
+</div>
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html" data-i18n-key="nav.home">Home</a>
+      <a href="about.html" data-i18n-key="nav.about">About</a>
+      <a href="services.html" class="active" data-i18n-key="nav.services">Services</a>
+      <a href="events.html" data-i18n-key="nav.events">Events</a>
+      <a href="gallery.html" data-i18n-key="nav.gallery">Gallery</a>
+      <a href="blog.html" data-i18n-key="nav.blog">Blog</a>
+      <a href="contact.html" data-i18n-key="nav.contact">Contact</a>
+      
+      <select id="language-selector" style="margin-left:10px;padding:5px;border-radius:5px;">
+        <option value="en">English</option>
+        <option value="zu">IsiZulu</option>
+        <option value="st">Sesotho</option>
+      </select>
+      <!-- This div and its buttons are hidden by the .language-selector CSS rule -->
+      <div class="language-selector">
+        <button class="language-btn active" data-lang="en">EN</button>
+        <button class="language-btn" data-lang="zu">ZU</button>
+        <button class="language-btn" data-lang="st">ST</button>
+      </div>
+    </nav>
+  </header>
+<div class="main-content">
+  <section class="services container">
+    <h1 data-i18n-key="services.heading">What We Offer</h1>
+    <div class="service-grid">
+      <div class="service-card">
+        <h3 data-i18n-key="services.card1.title">Event Management</h3>
+        <p data-i18n-key="services.card1.text">We plan and organize poetry slams, galas, music shows, and cultural festivals from start to finish.</p>
+      </div>
+     
+      <div class="service-card">
+        <h3 data-i18n-key="services.card3.title">Web Development</h3>
+        <p data-i18n-key="services.card3.text">We design and build websites for individuals and small businesses, from landing pages to full portfolios.</p>
+      </div>
+      <div class="service-card">
+        <h3 data-i18n-key="services.card4.title">Graphic Designing</h3>
+        <p data-i18n-key="services.card4.text">Our team creates posters, flyers, logos, and digital art for events, branding, and more.</p>
+      </div>
+      <div class="service-card">
+        <h3 data-i18n-key="services.card5.title">Sound Hiring</h3>
+        <p data-i18n-key="services.card5.text">High-quality sound equipment for your events, with setup and technical support included.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Haya Ngizwe Events ·<br>
+    <span data-i18n-key="footer.tagline">Creating moments to cherish forever</span><br>
+  </footer>
+  
+  <script>
+    const menu = document.querySelector('#mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+  </script>
+
+  <!-- MULTILINGUAL SCRIPT -->
+  <script>
+    // First, let's collect the original English text from the HTML
+    function collectOriginalEnglishText() {
+      const elements = document.querySelectorAll("[data-i18n-key]");
+      const originalTexts = {};
+      
+      elements.forEach(el => {
+        const key = el.dataset.i18nKey;
+        if (el.tagName === 'TITLE') {
+          originalTexts[key] = el.textContent; 
+        } else if (el.innerText && el.innerText.trim()) {
+          originalTexts[key] = el.innerText;
+        }
+      });
+      
+      return originalTexts;
+    }
+
+    const originalEnglish = collectOriginalEnglishText();
+
+    const translations = {
+      en: originalEnglish, // Use the original HTML text for English
+
+      zu: {
+        "nav.home":"Ekhaya",
+        "nav.about":"Mayelana",
+        "nav.services":"Izinsiza",
+        "nav.events":"Imicimbi",
+        "nav.gallery":"Izithombe",
+        "nav.blog":"Ibhulogi",
+        "nav.contact":"Xhumana",
+        "services.pageTitle":"Izinsiza | I-Haya Ngizwe Events",
+        "services.heading":"Esikunikezayo",
+        "services.card1.title":"Ukuphathwa Kwemicimbi",
+        "services.card1.text":"Sihlela futhi sihlele izinkondlo, imidlalo, imibukiso yomculo, nemikhosi yamasiko kusukela ekuqaleni kuze kube sekupheleni.",
+        "services.card2.title":"Ukuphathwa Kwamaciko",
+        "services.card2.text":"Ukusiza amakhono endawo ukuba akhule ngokubhukha, ukukhangisa, nokusekelwa ekuthuthukiseni umsebenzi.",
+        "services.card3.title":"Ukuthuthukiswa Kwewebhusayithi",
+        "services.card3.text":"Sidizayina futhi sakhe amawebhusayithi kubantu ngabanye namabhizinisi amancane, kusukela kumakhasi okuqala kuya kumaphothifoliyo agcwele.",
+        "services.card4.title":"Ukudizayina Kwamagrafa",
+        "services.card4.text":"Ithimba lethu lenza amaphosta, amaflaya, ama-logo, nobuciko bedijithali bemicimbi, ukukhangisa, nokuningi.",
+        "services.card5.title":"Ukuqashiswa Kwesilawuli Somsindo",
+        "services.card5.text":"Imishini yomsindo esezingeni eliphezulu yemicimbi yakho, kuhlanganise nokusetha nokusekelwa kwezobuchwepheshe.",
+        "services.card6.title":"Isu Lomkhiqizo",
+        "services.card6.text":"Siza abaculi namabhizinisi akhe ubunikazi bomkhiqizo obuqinile, obuyiqiniso obuxhumana nezithameli zawo.",
+        "footer.tagline":"Sakha Izikhathi Eziyigugu Ezingasoze Zalibaleka",
+        "loading.text":"Ilayisha ulimi..."
+      },
+
+      st: {
+        "nav.home":"Lehae",
+        "nav.about":"Mabapi",
+        "nav.services":"Ditshebeletso",
+        "nav.events":"Diketsahalo",
+        "nav.gallery":"Gallery",
+        "nav.blog":"Blog",
+        "nav.contact":"Ikopanye",
+        "services.pageTitle":"Ditshebeletso | Haya Ngizwe Events",
+        "services.heading":"Seo Re Fanang ka Sona",
+        "services.card1.title":"Tshediso ya Diketsahalo",
+        "services.card1.text":"Re rera le ho hlophisa dithothokiso, mekete, dipontsho tsa mmino, le mekete ya setso ho tloha qalong ho isa qetellong.",
+        "services.card2.title":"Tshediso ya Baetsi ba Litaki",
+        "services.card2.text":"Ho thusa litalenta tsa lehae ho hola ka ho behela, ho phatlalatsa, le tshehetso ya ntshetsopele ya botsebi.",
+        "services.card3.title":"Ntshetsopele ya Diwebsaete",
+        "services.card3.text":"Re rala le ho aha diwebsaete bakeng sa batho ka bomong le dikgwebo tse nyane, ho tloha maqepheng a ho fihla ho difolio tse felletseng.",
+        "services.card4.title":"Moralo wa Ditshwantsho",
+        "services.card4.text":"Sehlopha sa rona se etsa diphosta, diflyers, di-logo, le bonono ba dijithale bakeng sa diketsahalo, mofuta, le tse ding.",
+        "services.card5.title":"Ho Hira Modumo",
+        "services.card5.text":"Thepa ya modumo ya boleng bo holimo bakeng sa diketsahalo tsa hao, e nang le ho seta le tshehetso ya botekgeniki.",
+        "services.card6.title":"Leano la Brand",
+        "services.card6.text":"Re thusa baetsi ba litaki le dikgwebo ho aha boitsebahatso bo matla, ba nnete bo hokahanang le bamamedi ba bona.",
+        "footer.tagline":"Ho Bopa Dinako Tse Ke Keng Tsa Lebaleha",
+        "loading.text":"Ho lata puo..."
+      }
+    };
+
+    // Add loading text to English translations if not already there
+    if (!translations.en["loading.text"]) {
+      translations.en["loading.text"] = "Loading language...";
+    }
+
+    function applyLanguage(lang){
+      document.querySelectorAll("[data-i18n-key]").forEach(el=>{
+        const key = el.dataset.i18nKey;
+        if(translations[lang] && translations[lang][key]) {
+          if (el.tagName === 'TITLE') {
+            el.textContent = translations[lang][key];
+          } else {
+            el.innerText = translations[lang][key];
+          }
+        }
+      });
+    }
+
+    function showLoading() {
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      loadingOverlay.classList.add('active');
+    }
+
+    function hideLoading() {
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      loadingOverlay.classList.remove('active');
+    }
+
+    // Language change handler
+    function changeLanguage(lang) {
+      // Close mobile menu
+      const navMenu = document.querySelector('.nav-menu'); // Ensure navMenu is accessible
+      if (navMenu) {
+        navMenu.classList.remove('active');
+      }
+      
+      // Show loading overlay
+      showLoading();
+      
+      // Update language in localStorage
+      localStorage.setItem("language", lang);
+      
+      // Apply language after a short delay to show loading effect
+      setTimeout(() => {
+        applyLanguage(lang);
+        
+        // Update selector value
+        const selector = document.getElementById("language-selector"); // Ensure selector is accessible
+        if (selector) {
+          selector.value = lang;
+        }
+        
+        // Update active class on language buttons (though they are hidden by CSS)
+        document.querySelectorAll('.language-btn').forEach(button => {
+          if (button.dataset.lang === lang) {
+            button.classList.add('active');
+          } else {
+            button.classList.remove('active');
+          }
+        });
+
+        // Hide loading overlay
+        hideLoading();
+      }, 600); // 600ms delay to show loading effect
+    }
+
+    // Initialize
+    const selector = document.getElementById("language-selector");
+    const savedLang = localStorage.getItem("language") || "en";
+    
+    if (selector) { // Check if selector exists before trying to set its value
+      selector.value = savedLang;
+    }
+
+    // Only apply language if it's not English (English is already in the HTML)
+    // and if it's not the initial load of English, which is already present.
+    if (savedLang !== "en") {
+      applyLanguage(savedLang);
+    } else {
+      // If it's English, ensure the 'active' class is set on the English button
+      // This is crucial for consistency with blog.html's initial state
+      document.querySelectorAll('.language-btn').forEach(button => {
+        if (button.dataset.lang === 'en') {
+          button.classList.add('active');
+        } else {
+          button.classList.remove('active');
+        }
+      });
+    }
+
+
+    // Event listener for language selector (dropdown)
+    if (selector) { // Check if selector exists before adding event listener
+      selector.addEventListener("change", (e)=>{
+        const selectedLang = e.target.value;
+        changeLanguage(selectedLang);
+      });
+    }
+
+    // Event listener for language buttons (optional, as they are hidden by CSS in blog.html)
+    document.querySelectorAll('.language-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const lang = e.target.getAttribute('data-lang');
+        changeLanguage(lang);
+      });
+    });
+  </script>
+
+</body>
+</html>

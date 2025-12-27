@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>THEMBELIHLE MDLULI - Showcase Masterpiece | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Newspaper styling */
+    body {
+      background-color: #f5f5f5;
+      font-family: 'Georgia', 'Times New Roman', serif;
+    }
+
+    .newspaper-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      padding: 3rem;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      border: 1px solid #ddd;
+      position: relative;
+    }
+
+    .newspaper-header {
+      text-align: center;
+      border-bottom: 3px double #8e0000;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .newspaper-title {
+      font-family: 'Times New Roman', serif;
+      font-size: 2.8rem;
+      color: #222;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .newspaper-subtitle {
+      font-size: 1.4rem;
+      color: #8e0000;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .newspaper-byline {
+      font-size: 0.9rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .newspaper-date {
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    .newspaper-content {
+      column-count: 2;
+      column-gap: 3rem;
+      line-height: 1.8;
+      text-align: justify;
+    }
+
+    .newspaper-content p {
+      margin-bottom: 1.5rem;
+      text-indent: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .newspaper-content p:first-child {
+      text-indent: 0;
+    }
+
+    .newspaper-content p:first-child::first-letter {
+      float: left;
+      font-size: 4rem;
+      line-height: 1;
+      margin: 0.2rem 0.5rem 0 0;
+      color: #8e0000;
+      font-weight: bold;
+    }
+
+    .showcase-image {
+      width: 100%;
+      margin: 2rem 0;
+      border: 2px solid #ddd;
+    }
+
+    .image-caption {
+      text-align: center;
+      font-style: italic;
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .pull-quote {
+      font-size: 1.3rem;
+      font-style: italic;
+      color: #8e0000;
+      border-left: 4px solid #8e0000;
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+      font-weight: bold;
+    }
+
+    .showcase-highlights {
+      background: #fff8f8;
+      border: 2px solid #8e0000;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      break-inside: avoid;
+    }
+
+    .second-showcase-slot {
+      background: #f9f9f9;
+      border: 2px dashed #8e0000;
+      padding: 2rem;
+      text-align: center;
+      margin: 2rem 0;
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .second-showcase-slot h4 {
+      color: #8e0000;
+      margin-bottom: 1rem;
+    }
+
+    .second-showcase-placeholder {
+      width: 100%;
+      max-width: 500px;
+      height: 300px;
+      background: #eee;
+      border: 1px solid #ddd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #888;
+      font-style: italic;
+      margin: 1rem 0;
+    }
+
+    .youtube-link {
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+
+    .youtube-button {
+      display: inline-block;
+      background: #FF0000;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .youtube-button:hover {
+      background: #CC0000;
+      transform: translateY(-2px);
+    }
+
+    .collaboration-badge {
+      display: inline-block;
+      background: #8e0000;
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      margin: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .newspaper-content {
+        column-count: 1;
+      }
+      
+      .newspaper-container {
+        padding: 1.5rem;
+      }
+      
+      .newspaper-title {
+        font-size: 2rem;
+      }
+    }
+
+    /* Back button styling */
+    .back-button {
+      display: inline-block;
+      margin: 2rem 0;
+      padding: 0.8rem 1.5rem;
+      background: #8e0000;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: #6e0000;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body style="background-color: #f5f5f5;">
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  
+  <div class="main-content">
+    <div class="newspaper-container">
+      <div class="newspaper-header">
+        <h1 class="newspaper-title">THEMBELIHLE MDLULI</h1>
+        <div class="newspaper-subtitle">A Poetic Tour de Force That Redefined Performance Art</div>
+        <div class="newspaper-byline">Special Report: Showcase Coverage</div>
+        <div class="newspaper-date">September 27, 2025 | Woman in poetry, Ivory Park</div>
+      </div>
+
+      <div class="newspaper-content">
+        <p>In what can only be described as a masterclass in poetic performance, THEMBELIHLE MDLULI delivered not one, but two career-defining showcases that left audiences and critics alike breathless. From the moment she stepped onto the stage, it was clear this was to be her night—a commanding presence that owned every square inch of the performance space.</p>
+        
+        <img src="IMAGES/THEMBELIHLE 2.jpg" alt="THEMBELIHLE MDLULI commanding the stage" class="showcase-image">
+        <div class="image-caption">THEMBELIHLE MDLULI during her first showcase - a performance that set the tone for the entire evening</div>
+        
+        <div class="youtube-link">
+          <a href="https://youtu.be/DLKqFW1Km1k?si=JuJkndgMZQq50V0u" class="youtube-button" target="_blank">▶ Watch First Showcase Performance</a>
+        </div>
+        
+        <p>The first showcase began with a haunting stillness, THEMBELIHLE's voice emerging like smoke in a silent room. She delved into deeply personal territory, reciting poems about her own life experiences, struggles, and reflections on mortality. Her piece on death was particularly poignant—a raw exploration of loss and remembrance that resonated deeply with everyone present.</p>
+        
+        <div class="pull-quote">"She didn't just perform poetry—she became the poetry, every syllable a brushstroke on the canvas of our collective consciousness."</div>
+        
+        <p>What distinguished THEMBELIHLE's performance was the remarkable versatility she displayed. Moving seamlessly between isiZulu and English, she crafted bridges between linguistic worlds, creating a tapestry of sound and meaning that transcended language barriers. Her physicality—the measured gestures, the strategic movements across the stage—added a visual poetry to the spoken word.</p>
+        
+        <div class="showcase-highlights">
+          <h3>FIRST SHOWCASE HIGHLIGHTS</h3>
+          <p><strong>Personal Narratives:</strong> Deeply intimate poems about her life journey and personal experiences.</p>
+          <p><strong>Death & Mortality:</strong> A poignant exploration of loss and the human condition.</p>
+          <p><strong>Technical Mastery:</strong> Perfect control of pace, volume, and emotional intensity.</p>
+          <p><strong>Audience Connection:</strong> Eye contact that felt individual, making each audience member feel directly addressed.</p>
+        </div>
+
+        <!-- SECOND SHOWCASE SLOT -->
+        <div class="second-showcase-slot">
+          <h4>SECOND SHOWCASE: COLLABORATION MASTERPIECE</h4>
+          <div class="collaboration-badge">Featuring Alex Python Langa</div>
+          <div class="collaboration-badge">Featuring NQOBILE</div>
+          
+          <img src="IMAGES/Collaboration.jpg" alt="THEMBELIHLE MDLULI collaboration performance" class="showcase-image">
+          <p>For her second showcase, THEMBELIHLE collaborated with renowned poet and actor <strong>Alex Python Langa</strong>, creating a dynamic duo that brought both intensity and dramatic depth to the stage. Together with the angelic-voiced singer <strong>NQOBILE</strong>, they created a powerful fusion of poetry, drama, and music that left the audience spellbound.</p>
+          
+          <div class="youtube-link">
+            <a href="https://youtu.be/ijQbN2XI6gk?si=rjtHTaPaSN6G9Uww" class="youtube-button" target="_blank">▶ Watch Collaboration Performance</a>
+          </div>
+          
+          <p>This collaborative performance showcased an entirely different dimension of her talent—more experimental, more daring, more vulnerable. Where the first was a controlled storm, the second was raw electricity.</p>
+        </div>
+
+        <p>The second showcase, delivered after a brief intermission, revealed a different artist entirely. Gone was the measured control, replaced by raw, unfiltered emotional intensity. THEMBELIHLE returned to the stage transformed—her energy electric, her delivery urgent. This was poetry as exorcism, as catharsis, as revolution.</p>
+        
+        <p>In a particularly memorable sequence, she moved from whispered confession to full-throated declaration, her voice breaking at precisely the right moments to convey vulnerability without sacrificing power. The audience response was immediate and visceral—standing ovations at both the midpoint and conclusion of her performance.</p>
+        
+        <p>Industry veterans in attendance noted the rarity of such complete command over both technical precision and emotional authenticity. "She possesses that elusive quality," noted one veteran poet. "The ability to make every person in the room feel she's speaking directly to them, while simultaneously addressing universal themes."</p>
+        
+        <p>THEMBELIHLE MDLULI didn't just perform that night—she redefined what a poetic showcase could be. She left nothing on the stage, pouring every ounce of her artistic being into both performances. The result was more than entertainment; it was transformation. Those fortunate enough to witness these showcases didn't just hear poetry—they experienced it in their bones.</p>
+      </div>
+
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="gallery.html" class="back-button">← Back to Gallery</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Haya Ngizwe Events ·<br>
+    Creating Moments to Cherish Forever<br>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menu = document.querySelector('#mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+  </script>
+</body>
+</html>

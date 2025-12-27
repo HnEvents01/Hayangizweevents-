@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n-key="about.pageTitle">About Us | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Loading overlay styles */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 248, 248, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    
+    .loading-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #d4a574;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+    
+    .loading-text {
+      font-size: 18px;
+      color: #333;
+      font-weight: 500;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Hide the duplicate language selector */
+    .language-selector {
+      display: none;
+    }
+  </style>
+</head>
+
+<body style="background-color:#FFF8F8;">
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" data-i18n-key="loading.text">Loading language...</div>
+</div>
+
+<header>
+  <a href="index.html" class="logo-container">
+    <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+  </a>
+
+  <div class="menu-toggle" id="mobile-menu">
+    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+  </div>
+
+  <nav class="nav-menu">
+    <a href="index.html" data-i18n-key="nav.home">Home</a>
+    <a href="about.html" class="active" data-i18n-key="nav.about">About</a>
+    <a href="services.html" data-i18n-key="nav.services">Services</a>
+    <a href="events.html" data-i18n-key="nav.events">Events</a>
+    <a href="gallery.html" data-i18n-key="nav.gallery">Gallery</a>
+    <a href="blog.html" data-i18n-key="nav.blog">Blog</a>
+    <a href="contact.html" data-i18n-key="nav.contact">Contact</a>
+
+    <select id="language-selector" style="margin-left:10px;padding:5px;border-radius:5px;">
+      <option value="en">English</option>
+      <option value="zu">IsiZulu</option>
+      <option value="st">Sesotho</option>
+    </select>
+    <div class="language-selector">
+    <button class="language-btn active" data-lang="en">EN</button>
+    <button class="language-btn" data-lang="zu">ZU</button>
+    <button class="language-btn" data-lang="st">ST</button>
+</div>
+  </nav>
+</header>
+
+<div class="main-content">
+  <div class="about-page-container">
+
+    <h1 data-i18n-key="about.title">ABOUT US</h1>
+
+    <p data-i18n-key="about.intro">Haya Ngizwe Events was born from a passion for empowering voices and creating platforms for artistic expression. We believe in the transformative power of art, especially spoken word poetry, to connect communities and inspire change.</p>
+    <p data-i18n-key="about.mission">Our mission is to deliver professional, high-impact events that are both memorable and meaningful. From intimate poetry slams to large-scale cultural festivals, we handle every detail with creativity and precision.</p>
+
+    <div class="founder-section">
+      <img class="founder-image" src="IMAGES/Kgabo.jpg" alt="Kgabo Mabokela">
+      <div class="founder-info">
+        <h3 data-i18n-key="about.manager.title">Acting Manager</h3>
+        <p data-i18n-key="about.manager.quote">Being part of Haya Ngizwe Events means contributing to a movement that uplifts artists and unites communities through powerful stories.</p>
+        <strong data-i18n-key="about.manager.name">- Kgabo Mabokela</strong>
+      </div>
+    </div>
+
+    <div class="founder-section">
+      <img class="founder-image" src="IMAGES/William.jpg" alt="William Sete">
+      <div class="founder-info">
+        <h3 data-i18n-key="about.tech.title">Acting Technical Manager</h3>
+        <p data-i18n-key="about.tech.quote">My role is to ensure every performance and moment is delivered flawlessly through technical excellence.</p>
+        <strong data-i18n-key="about.tech.name">- William Sete</strong>
+      </div>
+    </div>
+
+    <div class="founder-section">
+      <img class="founder-image" src="IMAGES/BHEKUMUZI.jpeg" alt="Bhekumuzi Mahomane">
+      <div class="founder-info">
+        <h3 data-i18n-key="about.founder.title">A Word From Our Founder</h3>
+        <p data-i18n-key="about.founder.quote">We started Haya Ngizwe to build a home for stories that need to be heard and remembered.</p>
+        <strong data-i18n-key="about.founder.name">- Bhekumuzi Mahomane</strong>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2025 Haya Ngizwe Events · <br>
+  <span data-i18n-key="footer.tagline">Creating moments to cherish forever</span>
+</footer>
+
+<!-- MOBILE MENU -->
+<script>
+  const menu = document.querySelector('#mobile-menu');
+  const navMenu = document.querySelector('.nav-menu');
+  menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+</script>
+
+<!-- MULTILINGUAL SCRIPT -->
+<script>
+// First, let's collect the original English text from the HTML
+function collectOriginalEnglishText() {
+  const elements = document.querySelectorAll("[data-i18n-key]");
+  const originalTexts = {};
+  
+  elements.forEach(el => {
+    const key = el.dataset.i18nKey;
+    if (el.tagName === 'TITLE') { // Handle title separately for textContent
+      originalTexts[key] = el.textContent;
+    } else if (el.innerText && el.innerText.trim()) {
+      originalTexts[key] = el.innerText;
+    }
+  });
+  
+  return originalTexts;
+}
+
+const originalEnglish = collectOriginalEnglishText();
+
+const translations = {
+  en: originalEnglish, // Use the original HTML text for English
+
+  zu: {
+    "about.pageTitle":"Mayelana Nathi | I-Haya Ngizwe Events",
+    "nav.home":"Ekhaya",
+    "nav.about":"Mayelana",
+    "nav.services":"Izinsiza",
+    "nav.events":"Imicimbi",
+    "nav.gallery":"Izithombe",
+    "nav.blog":"Ibhulogi",
+    "nav.contact":"Xhumana",
+    "about.title":"MAYELANA NATHI",
+    "about.intro":"I-Haya Ngizwe Events yasungulwa ngenhloso yokunika amazwi amandla nokwakha izinkundla zobuciko. Sikholelwa emandleni aguqulayo obuciko, ikakhulukazi izinkondlo ezikhulunywayo, ukuxhuma imiphakathi nokugqugquzela ushintsho.",
+    "about.mission":"Inhloso yethu ukuhlela imicimbi enomthelela, ekhumbulekayo nenobungcweti. Kusukela emicimbini yezinkondlo esondelene kuye emikhosini emikhulu yamasiko, siphatha yonke imininingwane ngobuhlakani nangokunemba.",
+    "about.manager.title":"Umphathi Osebenzayo",
+    "about.manager.quote":"Ukuba yingxenye ye-Haya Ngizwe Events kusho ukufaka isandla enhlanganweni ephakamisa amaciko futhi ihlanganise imiphakathi ngezindaba ezinamandla.",
+    "about.manager.name":"- Kgabo Mabokela",
+    "about.tech.title":"Umphathi Wezobuchwepheshe Osebenzayo",
+    "about.tech.quote":"Indima yami ukuqinisekisa ukuthi yonke imidlalo nesikhathi kulethwa ngokungenasici ngokusebenzisa ubuhle bezobuchwepheshe.",
+    "about.tech.name":"- William Sete",
+    "about.founder.title":"Amazwi Avela Kumsunguli Wethu",
+    "about.founder.quote":"Sasungula i-Haya Ngizwe ukwakha ikhaya lezindaba okufanele zizwe futhi zikhunjulwe.",
+    "about.founder.name":"- Bhekumuzi Mahomane",
+    "footer.tagline":"Sakha izikhathi eziyigugu ezingasoze zalibaleka",
+    "loading.text":"Ilayisha ulimi..."
+  },
+
+  st: {
+    "about.pageTitle":"Mabapi Le Rona | Haya Ngizwe Events",
+    "nav.home":"Lehae",
+    "nav.about":"Mabapi",
+    "nav.services":"Ditshebeletso",
+    "nav.events":"Diketsahalo",
+    "nav.gallery":"Gallery",
+    "nav.blog":"Blog",
+    "nav.contact":"Ikopanye",
+    "about.title":"MABAPI LE RONA",
+    "about.intro":"Haya Ngizwe Events e thehilwe ka sepheo sa ho matlafatsa mantsoe le ho theha di-platform tsa bonono. Re dumela matleng a ho fetola a bonono, haholoholo dithothokiso tse buuoang, ho hokahanya ditjhaba le ho kgothatsa phetoho.",
+    "about.mission":"Morero wa rona ke ho fana ka diketsahalo tsa setsebi, tse nang le phello e kgolo, tse ke keng tsa lebalwa ebile di le tsa bohlokwa. Ho tloha dithothokisong tse nyane ho isa meketeng e meholo ya setso, re sebetsana le dintlha tsohle ka boqapi le ka ho nepahala.",
+    "about.manager.title":"Mookameli ya Sebetsang",
+    "about.manager.quote":"Ho ba karolo ya Haya Ngizwe Events ho bolela ho kenya letsoho ho motsamao o phahamisang baetsi ba ditaki le ho kopanya ditjhaba ka dipale tse matla.",
+    "about.manager.name":"- Kgabo Mabokela",
+    "about.tech.title":"Mookameli wa Thekeniki ya Sebetsang",
+    "about.tech.quote":"Karolo ya ka ke ho netefatsa hore ts'ebetso le nako e nngwe le e nngwe e fana ka mokgwa o se nang sekodi ka boiqatso ba thekeniki.",
+    "about.tech.name":"- William Sete",
+    "about.founder.title":"Molaetsa O Tswang ho Mothehi wa Rona",
+    "about.founder.quote":"Re thehile Haya Ngizwe ho aha lehae la dipale tse lokelang ho utlwahala le ho hopolwa.",
+    "about.founder.name":"- Bhekumuzi Mahomane",
+    "footer.tagline":"Ho bopa dinako tse ke keng tsa lebaleha",
+    "loading.text":"Ho lata puo..."
+  }
+};
+
+// Add loading text to English translations if not already there
+if (!translations.en["loading.text"]) {
+  translations.en["loading.text"] = "Loading language...";
+}
+
+function applyLanguage(lang){
+  document.querySelectorAll("[data-i18n-key]").forEach(el=>{
+    const key = el.dataset.i18nKey;
+    if(translations[lang] && translations[lang][key]) {
+      // For the title tag, we need to update textContent, not innerText
+      if (el.tagName === 'TITLE') {
+        el.textContent = translations[lang][key];
+      } else {
+        el.innerText = translations[lang][key];
+      }
+    }
+  });
+}
+
+function showLoading() {
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  loadingOverlay.classList.add('active');
+}
+
+function hideLoading() {
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  loadingOverlay.classList.remove('active');
+}
+
+// Language change handler
+function changeLanguage(lang) {
+  // Close mobile menu
+  navMenu.classList.remove('active');
+  
+  // Show loading overlay
+  showLoading();
+  
+  // Update language in localStorage
+  localStorage.setItem("language", lang);
+  
+  // Apply language after a short delay to show loading effect
+  setTimeout(() => {
+    applyLanguage(lang);
+    
+    // Update selector value
+    selector.value = lang;
+    
+    // Hide loading overlay
+    hideLoading();
+  }, 600); // 600ms delay to show loading effect
+}
+
+// Initialize
+const selector = document.getElementById("language-selector");
+const savedLang = localStorage.getItem("language") || "en";
+selector.value = savedLang;
+
+// Only apply language if it's not English (English is already in the HTML)
+if (savedLang !== "en") {
+  applyLanguage(savedLang);
+}
+
+// Event listener for language selector
+selector.addEventListener("change", (e)=>{
+  const selectedLang = e.target.value;
+  changeLanguage(selectedLang);
+});
+
+// Optional: If you want to use the button language selector too
+document.querySelectorAll('.language-btn').forEach(button => {
+  button.addEventListener('click', (e) => {
+    const lang = e.target.getAttribute('data-lang');
+    changeLanguage(lang);
+  });
+});
+</script>
+
+</body>
+</html>

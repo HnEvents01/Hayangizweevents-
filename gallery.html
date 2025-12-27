@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n-key="gallery.pageTitle">Gallery | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Loading overlay styles */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 248, 248, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    
+    .loading-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #d4a574;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+    
+    .loading-text {
+      font-size: 18px;
+      color: #333;
+      font-weight: 500;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Hide the duplicate language selector */
+    .language-selector {
+      display: none;
+    }
+
+    /* Styles for the new lightbox/slideshow */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      background: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox-content img,
+    .lightbox-content video {
+      max-width: 100%;
+      max-height: 80vh; /* Adjust as needed */
+      display: block;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -30px; /* Position above the content */
+      right: -30px; /* Position to the right of the content */
+      background: #d4a574;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      line-height: 1;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 24px;
+      line-height: 1;
+      border-radius: 5px;
+      user-select: none;
+      z-index: 10001; /* Ensure nav buttons are above content */
+    }
+
+    .lightbox-nav.prev {
+      left: 10px;
+    }
+
+    .lightbox-nav.next {
+      right: 10px;
+    }
+
+    /* Style for video thumbnails */
+    .gallery-item.video-item::before {
+      content: '▶'; /* Play icon */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 60px;
+      color: rgba(255, 255, 255, 0.8);
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      z-index: 1;
+    }
+
+  </style>
+</head>
+<body style="background-color: #FDFDFD;">
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" data-i18n-key="loading.text">Loading language...</div>
+</div>
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html" data-i18n-key="nav.home">Home</a>
+      <a href="about.html" data-i18n-key="nav.about">About</a>
+      <a href="services.html" data-i18n-key="nav.services">Services</a>
+      <a href="events.html" data-i18n-key="nav.events">Events</a>
+      <a href="gallery.html" class="active" data-i18n-key="nav.gallery">Gallery</a>
+      <a href="blog.html" data-i18n-key="nav.blog">Blog</a>
+      <a href="contact.html" data-i18n-key="nav.contact">Contact</a>
+
+      <select id="language-selector" style="margin-left:10px;padding:5px;border-radius:5px;">
+        <option value="en">English</option>
+        <option value="zu">IsiZulu</option>
+        <option value="st">Sesotho</option>
+      </select>
+      <div class="language-selector">
+        <button class="language-btn active" data-lang="en">EN</button>
+        <button class="language-btn" data-lang="zu">ZU</button>
+        <button class="language-btn" data-lang="st">ST</button>
+      </div>
+    </nav>
+  </header>
+  
+  <div class="main-content">
+    <div class="page-title">
+      <h1 data-i18n-key="gallery.heading">Gallery</h1>
+      <p data-i18n-key="gallery.tagline">Click a folder to explore some moments from our previous shows.</p>
+    </div>
+
+    <div class="container">
+      <!-- BIG 5 MALE POETS FOLDER -->
+      <div class="folder" id="male-poets-folder">
+        <div class="folder-tab" data-i18n-key="gallery.folder.malePoets">Big 5 Male Poets</div>
+        <div class="folder-content">
+          <div class="gallery-grid" id="male-poets-gallery">
+            <a href="post-seven-perfection.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/7PERFECTIONS.jpeg" alt="SEVEN PERFECTION"><div class="gallery-details"><h3 data-i18n-key="gallery.malePoets.sevenPerfection">SEVEN PERFECTION</h3></div></div></a>
+            <a href="post-black-child.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/BLACK CHILD.jpg" alt="BLACK CHILD"><div class="gallery-details"><h3 data-i18n-key="gallery.malePoets.blackChild">BLACK CHILD</h3></div></div></a>
+            <a href="post-phoka-de-poet.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/PHOKA DE POET.jpg" alt="PHOKA DE POET"><div class="gallery-details"><h3 data-i18n-key="gallery.malePoets.phokaDePoet">PHOKA DE POET</h3></div></div></a>
+            <a href="post-skhokho-samariko.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/SKHOKHO DE POET.jpg" alt="SKHOKHO SAMARIKO"><div class="gallery-details"><h3 data-i18n-key="gallery.malePoets.skhokhoSamariko">SKHOKHO SAMARIKO</h3></div></div></a>
+            <a href="post-younger-drill.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/YOUNGER DRILL.jpg" alt="YOUNGER DRILL"><div class="gallery-details"><h3 data-i18n-key="gallery.malePoets.youngerDrill">YOUNGER DRILL</h3></div></div></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- BIG 5 FEMALE POETS FOLDER -->
+      <div class="folder" id="female-poets-folder">
+        <div class="folder-tab" data-i18n-key="gallery.folder.femalePoets">Big 5 Female Poets</div>
+        <div class="folder-content">
+          <div class="gallery-grid" id="female-poets-gallery">
+            <a href="post-dark-dindi.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/DARK DINDI.jpg" alt="DARK DINDI"><div class="gallery-details"><h3 data-i18n-key="gallery.femalePoets.darkDindi">DARK DINDI</h3></div></div></a>
+            <a href="post-kaytone.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/KAYTONE.jpg" alt="KAYTONE"><div class="gallery-details"><h3 data-i18n-key="gallery.femalePoets.kaytone">KAYTONE</h3></div></div></a>
+            <a href="post-liricalkhet.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/THE LIRICALKHET.jpg" alt="THE LIRICALKHET"><div class="gallery-details"><h3 data-i18n-key="gallery.femalePoets.liricalkhet">THE LIRICALKHET</h3></div></div></a>
+            <a href="post-candiiice-m.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/CANDIIICE.M.jpg" alt="CANDIIICE.M"><div class="gallery-details"><h3 data-i18n-key="gallery.femalePoets.candiiiceM">CANDIIICE.M</h3></div></div></a>
+            <a href="post-malungelo-lizwi.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/MALUNGELO & LIZWI.jpg" alt="MALUNGELO & LIZWI"><div class="gallery-details"><h3 data-i18n-key="gallery.femalePoets.malungeloLizwi">MALUNGELO & LIZWI</h3></div></div></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Woman in poetry FOLDER -->
+      <div class="folder" id="woman-poetry-folder">
+        <div class="folder-tab" data-i18n-key="gallery.folder.womanInPoetry">Woman in poetry</div>
+        <div class="folder-content">
+          <div class="gallery-grid" id="womanInpoetry-moments-gallery">
+            <!-- Content for Woman in Poetry will go here -->
+            <a href="post-thembelihle.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/THEMBELIHLE 2.jpg" alt="THEMBELIHLE MDLULI"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.thembelihlemdluli">THEMBELIHLE MDLULI</h3></div></div></a>
+            <a href="post-simphiwe-imbongi.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/SIMPHIWE.jpg" alt="SIMPHIWE IMBONGI"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.simphiweimbongi">HEADLINER: SIMPHIWE IMBONGI</h3></div></div></a>
+            <a href="post-sprinter.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/Sprinter.jpg" alt="SPRINTER"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.sprinter">HEADLINER: SPRINTER</h3></div></div></a>
+            <a href="post-mamakhe-mbhele.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/MAMAKHE.jpg" alt="MAMAKHE MBHELE"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.mamakhembhele">HEADLINER: MAMAKHE MBHELE</h3></div></div></a>
+            <a href="post-thasky.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/Thasky.jpg" alt="THASKY"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.thasky">HEADLINER: THASKY</h3></div></div></a>
+            <a href="post-regina-maphosa-openmic.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/Regina.jpg" alt="OPEN MIC: Regina Maphosa"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.regina">OPEN MIC: REGINA MAPHOSA</h3></div></div></a>
+            <a href="post-meliwa-rae.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/Meliwa.jpg" alt="OPEN MIC: MELIWA RAE"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.Meliwa">OPEN MIC: MELIWA RAE</h3></div></div></a>
+            <a href="post-lindokuhle-motau.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/Lindokuhle.jpg" alt="OPEN MIC: LINDOKUHLE MOTAU"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.LindokuhleMotau">OPEN MIC: LINDOKUHLE MOTAU</h3></div></div></a>
+            <a href="post-c4.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/C4.jpg" alt="OPEN MIC: MELIWA RAE"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.C4">OPEN MIC: C4</h3></div></div></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- EVENT HIGHLIGHTS FOLDER -->
+      <div class="folder" id="highlights-folder">
+        <div class="folder-tab" data-i18n-key="gallery.folder.eventHighlights">Events MC's</div>
+        <div class="folder-content">
+          <div class="gallery-grid" id="highlights-gallery">
+            <a href="post-thabang-maduna.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/THABANG MADUNA.Jpg" alt="MC Thabang Maduna"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.thabangMaduna">MC: THABANG MADUNA</h3></div></div></a>
+            <a href="post-bra-mfana.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/Bra mfana.jpg" alt="BRA MFANA"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.bramfana">BRA MFANA</h3></div></div></a>
+            <a href="post-regina-maphosa.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/REGINA MAPHOSA.jpg" alt="MC Regina Maphosa"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.reginaMaphosa">MC: REGINA MAPHOSA</h3></div></div></a>
+            <a href="post-vocalvee.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/VOCALVEE.jpeg" alt="Open Act Vocalvee"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.vocalvee">OPENING ACT: VOCALVEE</h3></div></div></a>
+            <a href="post-closing-big5.html" class="gallery-item-link"><div class="gallery-item"><img src="IMAGES/CLOSING BIG 5.jpg" alt="Closing of the Show"><div class="gallery-details"><h3 data-i18n-key="gallery.highlights.closingBig5">A Monumental Closing</h3></div></div></a>
+          </div>
+        </div>
+      </div>
+<!-- Previous Shows and Videos Folder -->
+<div class="folder" id="previous-shows-videos-folder">
+  <div class="folder-tab" data-i18n-key="gallery.folder.previousShowsVideos">Previous Shows and Photos</div>
+  <div class="folder-content">
+    <div class="gallery-grid" id="previous-shows-videos-gallery">
+      <!-- Picture 1 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_1.jpg" data-type="image">
+        <img src="IMAGES/1766763649690.jpg" alt="Show Photo 1">
+        <div class="gallery-details"><h3>Show Photo 1</h3></div>
+      </div>
+      
+      <!-- Picture 2 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_2.jpg" data-type="image">
+        <img src="IMAGES/1766763664052.jpg" alt="Show Photo 2">
+        <div class="gallery-details"><h3>Show Photo 2</h3></div>
+      </div>
+      
+      <!-- Picture 3 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_3.jpg" data-type="image">
+        <img src="IMAGES/show_3.jpg" alt="Show Photo 3">
+        <div class="gallery-details"><h3>Show Photo 3</h3></div>
+      </div>
+      
+      <!-- Picture 4 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_4.jpg" data-type="image">
+        <img src="IMAGES/show_4.jpg" alt="Show Photo 4">
+        <div class="gallery-details"><h3>Show Photo 4</h3></div>
+      </div>
+      
+      <!-- Picture 5 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_5.jpg" data-type="image">
+        <img src="IMAGES/show_5.jpg" alt="Show Photo 5">
+        <div class="gallery-details"><h3>Show Photo 5</h3></div>
+      </div>
+      
+      <!-- Picture 6 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_6.jpg" data-type="image">
+        <img src="IMAGES/show_6.jpg" alt="Show Photo 6">
+        <div class="gallery-details"><h3>Show Photo 6</h3></div>
+      </div>
+      
+      <!-- Picture 7 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_7.jpg" data-type="image">
+        <img src="IMAGES/show_7.jpg" alt="Show Photo 7">
+        <div class="gallery-details"><h3>Show Photo 7</h3></div>
+      </div>
+      
+      <!-- Picture 8 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_8.jpg" data-type="image">
+        <img src="IMAGES/show_8.jpg" alt="Show Photo 8">
+        <div class="gallery-details"><h3>Show Photo 8</h3></div>
+      </div>
+      
+      <!-- Picture 9 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_9.jpg" data-type="image">
+        <img src="IMAGES/show_9.jpg" alt="Show Photo 9">
+        <div class="gallery-details"><h3>Show Photo 9</h3></div>
+      </div>
+      
+      <!-- Picture 10 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_10.jpg" data-type="image">
+        <img src="IMAGES/show_10.jpg" alt="Show Photo 10">
+        <div class="gallery-details"><h3>Show Photo 10</h3></div>
+      </div>
+      
+      <!-- Picture 11 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_11.jpg" data-type="image">
+        <img src="IMAGES/show_11.jpg" alt="Show Photo 11">
+        <div class="gallery-details"><h3>Show Photo 11</h3></div>
+      </div>
+      
+      <!-- Picture 12 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_12.jpg" data-type="image">
+        <img src="IMAGES/show_12.jpg" alt="Show Photo 12">
+        <div class="gallery-details"><h3>Show Photo 12</h3></div>
+      </div>
+      
+      <!-- Picture 13 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_13.jpg" data-type="image">
+        <img src="IMAGES/show_13.jpg" alt="Show Photo 13">
+        <div class="gallery-details"><h3>Show Photo 13</h3></div>
+      </div>
+      
+      <!-- Picture 14 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_14.jpg" data-type="image">
+        <img src="IMAGES/show_14.jpg" alt="Show Photo 14">
+        <div class="gallery-details"><h3>Show Photo 14</h3></div>
+      </div>
+      
+      <!-- Picture 15 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_15.jpg" data-type="image">
+        <img src="IMAGES/show_15.jpg" alt="Show Photo 15">
+        <div class="gallery-details"><h3>Show Photo 15</h3></div>
+      </div>
+      
+      <!-- Picture 16 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_16.jpg" data-type="image">
+        <img src="IMAGES/show_16.jpg" alt="Show Photo 16">
+        <div class="gallery-details"><h3>Show Photo 16</h3></div>
+      </div>
+      
+      <!-- Picture 17 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_17.jpg" data-type="image">
+        <img src="IMAGES/show_17.jpg" alt="Show Photo 17">
+        <div class="gallery-details"><h3>Show Photo 17</h3></div>
+      </div>
+      
+      <!-- Picture 18 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_18.jpg" data-type="image">
+        <img src="IMAGES/show_18.jpg" alt="Show Photo 18">
+        <div class="gallery-details"><h3>Show Photo 18</h3></div>
+      </div>
+      
+      <!-- Picture 19 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_19.jpg" data-type="image">
+        <img src="IMAGES/show_19.jpg" alt="Show Photo 19">
+        <div class="gallery-details"><h3>Show Photo 19</h3></div>
+      </div>
+      
+      <!-- Picture 20 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_20.jpg" data-type="image">
+        <img src="IMAGES/show_20.jpg" alt="Show Photo 20">
+        <div class="gallery-details"><h3>Show Photo 20</h3></div>
+      </div>
+      
+      <!-- Picture 21 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_21.jpg" data-type="image">
+        <img src="IMAGES/show_21.jpg" alt="Show Photo 21">
+        <div class="gallery-details"><h3>Show Photo 21</h3></div>
+      </div>
+      
+      <!-- Picture 22 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_22.jpg" data-type="image">
+        <img src="IMAGES/show_22.jpg" alt="Show Photo 22">
+        <div class="gallery-details"><h3>Show Photo 22</h3></div>
+      </div>
+      
+      <!-- Picture 23 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_23.jpg" data-type="image">
+        <img src="IMAGES/show_23.jpg" alt="Show Photo 23">
+        <div class="gallery-details"><h3>Show Photo 23</h3></div>
+      </div>
+      
+      <!-- Picture 24 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_24.jpg" data-type="image">
+        <img src="IMAGES/show_24.jpg" alt="Show Photo 24">
+        <div class="gallery-details"><h3>Show Photo 24</h3></div>
+      </div>
+      
+      <!-- Picture 25 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_25.jpg" data-type="image">
+        <img src="IMAGES/show_25.jpg" alt="Show Photo 25">
+        <div class="gallery-details"><h3>Show Photo 25</h3></div>
+      </div>
+      
+      <!-- Picture 26 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_26.jpg" data-type="image">
+        <img src="IMAGES/show_26.jpg" alt="Show Photo 26">
+        <div class="gallery-details"><h3>Show Photo 26</h3></div>
+      </div>
+      
+      <!-- Picture 27 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_27.jpg" data-type="image">
+        <img src="IMAGES/show_27.jpg" alt="Show Photo 27">
+        <div class="gallery-details"><h3>Show Photo 27</h3></div>
+      </div>
+      
+      <!-- Picture 28 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_28.jpg" data-type="image">
+        <img src="IMAGES/show_28.jpg" alt="Show Photo 28">
+        <div class="gallery-details"><h3>Show Photo 28</h3></div>
+      </div>
+      
+      <!-- Picture 29 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_29.jpg" data-type="image">
+        <img src="IMAGES/show_29.jpg" alt="Show Photo 29">
+        <div class="gallery-details"><h3>Show Photo 29</h3></div>
+      </div>
+      
+      <!-- Picture 30 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_30.jpg" data-type="image">
+        <img src="IMAGES/show_30.jpg" alt="Show Photo 30">
+        <div class="gallery-details"><h3>Show Photo 30</h3></div>
+      </div>
+      
+      <!-- Picture 31 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_31.jpg" data-type="image">
+        <img src="IMAGES/show_31.jpg" alt="Show Photo 31">
+        <div class="gallery-details"><h3>Show Photo 31</h3></div>
+      </div>
+      
+      <!-- Picture 32 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_32.jpg" data-type="image">
+        <img src="IMAGES/show_32.jpg" alt="Show Photo 32">
+        <div class="gallery-details"><h3>Show Photo 32</h3></div>
+      </div>
+      
+      <!-- Picture 33 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_33.jpg" data-type="image">
+        <img src="IMAGES/1766763494500.jpg" alt="Show Photo 33">
+        <div class="gallery-details"><h3>Show Photo 33</h3></div>
+      </div>
+      
+      <!-- Picture 34 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_34.jpg" data-type="image">
+        <img src="IMAGES/show_34.jpg" alt="Show Photo 34">
+        <div class="gallery-details"><h3>Show Photo 34</h3></div>
+      </div>
+      
+      <!-- Picture 35 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_35.jpg" data-type="image">
+        <img src="IMAGES/show_35.jpg" alt="Show Photo 35">
+        <div class="gallery-details"><h3>Show Photo 35</h3></div>
+      </div>
+      
+      <!-- Picture 36 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_36.jpg" data-type="image">
+        <img src="IMAGES/show_36.jpg" alt="Show Photo 36">
+        <div class="gallery-details"><h3>Show Photo 36</h3></div>
+      </div>
+      
+      <!-- Picture 37 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_37.jpg" data-type="image">
+        <img src="IMAGES/show_37.jpg" alt="Show Photo 37">
+        <div class="gallery-details"><h3>Show Photo 37</h3></div>
+      </div>
+      
+      <!-- Picture 38 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_38.jpg" data-type="image">
+        <img src="IMAGES/show_38.jpg" alt="Show Photo 38">
+        <div class="gallery-details"><h3>Show Photo 38</h3></div>
+      </div>
+      
+      <!-- Picture 39 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_39.jpg" data-type="image">
+        <img src="IMAGES/show_39.jpg" alt="Show Photo 39">
+        <div class="gallery-details"><h3>Show Photo 39</h3></div>
+      </div>
+      
+      <!-- Picture 40 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_40.jpg" data-type="image">
+        <img src="IMAGES/show_40.jpg" alt="Show Photo 40">
+        <div class="gallery-details"><h3>Show Photo 40</h3></div>
+      </div>
+      
+      <!-- Picture 41 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_41.jpg" data-type="image">
+        <img src="IMAGES/show_41.jpg" alt="Show Photo 41">
+        <div class="gallery-details"><h3>Show Photo 41</h3></div>
+      </div>
+      
+      <!-- Picture 42 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_42.jpg" data-type="image">
+        <img src="IMAGES/show_42.jpg" alt="Show Photo 42">
+        <div class="gallery-details"><h3>Show Photo 42</h3></div>
+      </div>
+      
+      <!-- Picture 43 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_43.jpg" data-type="image">
+        <img src="IMAGES/show_43.jpg" alt="Show Photo 43">
+        <div class="gallery-details"><h3>Show Photo 43</h3></div>
+      </div>
+      
+      <!-- Picture 44 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_44.jpg" data-type="image">
+        <img src="IMAGES/show_44.jpg" alt="Show Photo 44">
+        <div class="gallery-details"><h3>Show Photo 44</h3></div>
+      </div>
+      
+      <!-- Picture 45 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_45.jpg" data-type="image">
+        <img src="IMAGES/show_45.jpg" alt="Show Photo 45">
+        <div class="gallery-details"><h3>Show Photo 45</h3></div>
+      </div>
+      
+      <!-- Picture 46 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_46.jpg" data-type="image">
+        <img src="IMAGES/show_46.jpg" alt="Show Photo 46">
+        <div class="gallery-details"><h3>Show Photo 46</h3></div>
+      </div>
+      
+      <!-- Picture 47 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_47.jpg" data-type="image">
+        <img src="IMAGES/show_47.jpg" alt="Show Photo 47">
+        <div class="gallery-details"><h3>Show Photo 47</h3></div>
+      </div>
+      
+      <!-- Picture 48 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_48.jpg" data-type="image">
+        <img src="IMAGES/show_48.jpg" alt="Show Photo 48">
+        <div class="gallery-details"><h3>Show Photo 48</h3></div>
+      </div>
+      
+      <!-- Picture 49 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_49.jpg" data-type="image">
+        <img src="IMAGES/show_49.jpg" alt="Show Photo 49">
+        <div class="gallery-details"><h3>Show Photo 49</h3></div>
+      </div>
+      
+      <!-- Picture 50 -->
+      <div class="gallery-item" data-full-src="IMAGES/show_50.jpg" data-type="image">
+        <img src="IMAGES/show_50.jpg" alt="Show Photo 50">
+        <div class="gallery-details"><h3>Show Photo 50</h3></div>
+      </div>
+    </div>
+  </div>
+</div>
+      <!-- ... existing folder divs ... -->
+    </div> <!-- Close container -->
+  </div> <!-- Add this: Close main-content -->
+
+  <footer>
+    © 2025 Haya Ngizwe Events ·<br>
+    <span data-i18n-key="footer.tagline">Creating Moments to Cherish Forever</span><br>
+  </footer>
+
+  <!-- Lightbox Overlay Structure -->
+  <div class="lightbox-overlay" id="lightboxOverlay">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose">&times;</button>
+      <button class="lightbox-nav prev" id="lightboxPrev">&#10094;</button>
+      <div id="lightboxMediaContainer">
+        <!-- Media (img or video) will be loaded here by JavaScript -->
+      </div>
+      <button class="lightbox-nav next" id="lightboxNext">&#10095;</button>
+    </div>
+  </div>
+  
+  <script>
+// Mobile menu toggle
+  const menu = document.querySelector('#mobile-menu');
+  const navMenu = document.querySelector('.nav-menu');
+  menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+
+  // Folder toggle functionality
+  document.querySelectorAll('.folder-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+          const folderContent = tab.nextElementSibling;
+          const galleryGrid = folderContent.querySelector('.gallery-grid');
+          
+          // Close other open folders
+          document.querySelectorAll('.folder-content').forEach(otherFolderContent => {
+              if (otherFolderContent !== folderContent) {
+                  otherFolderContent.style.maxHeight = null;
+                  otherFolderContent.querySelector('.gallery-grid').style.display = 'none';
+              }
+          });
+
+          // Toggle the clicked folder
+          if (galleryGrid.style.display === 'grid') {
+              galleryGrid.style.display = 'none';
+              folderContent.style.maxHeight = null; // Collapse folder
+          } else {
+              galleryGrid.style.display = 'grid';
+              // Set max-height to enable smooth transition (large enough value)
+              folderContent.style.maxHeight = folderContent.scrollHeight + "px";
+          }
+      });
+  });
+
+  // Lightbox Functionality
+  const lightboxOverlay = document.getElementById('lightboxOverlay');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+  const lightboxMediaContainer = document.getElementById('lightboxMediaContainer');
+
+  let currentGalleryItems = []; // Stores items of the currently active folder
+  let currentIndex = 0; // Current item index in the lightbox
+
+  function openLightbox(itemElement, itemsArray) {
+      currentGalleryItems = Array.from(itemsArray); // Get all items from the current grid
+      currentIndex = currentGalleryItems.indexOf(itemElement); // Find the index of the clicked item
+
+      updateLightboxContent();
+      lightboxOverlay.style.display = 'flex'; // Show the lightbox
+  }
+
+  function closeLightbox() {
+      lightboxOverlay.style.display = 'none';
+      // Stop any playing video when closing
+      lightboxMediaContainer.innerHTML = ''; 
+  }
+
+  function showNextItem() {
+      currentIndex = (currentIndex + 1) % currentGalleryItems.length;
+      updateLightboxContent();
+  }
+
+  function showPrevItem() {
+      currentIndex = (currentIndex - 1 + currentGalleryItems.length) % currentGalleryItems.length;
+      updateLightboxContent();
+  }
+
+  function updateLightboxContent() {
+      if (currentGalleryItems.length === 0) return;
+
+      const item = currentGalleryItems[currentIndex];
+      const fullSrc = item.dataset.fullSrc;
+      const type = item.dataset.type;
+
+      lightboxMediaContainer.innerHTML = ''; // Clear previous content
+
+      if (type === 'image') {
+          const img = document.createElement('img');
+          img.src = fullSrc;
+          lightboxMediaContainer.appendChild(img);
+      } else if (type === 'video') {
+          const video = document.createElement('video');
+          video.src = fullSrc;
+          video.controls = true; // Show video controls
+          video.autoplay = true; // Autoplay the video
+          video.loop = true; // Loop the video
+          lightboxMediaContainer.appendChild(video);
+      }
+  }
+
+  // Event listener for opening lightbox
+  document.querySelectorAll('.gallery-grid').forEach(grid => {
+      grid.addEventListener('click', (e) => {
+          const galleryItemLink = e.target.closest('.gallery-item-link');
+          const galleryItem = e.target.closest('.gallery-item');
+
+          // If it's one of the old links, let it behave as a link
+          if (galleryItemLink) {
+              // Let the browser handle the navigation for these specific links
+              return; 
+          }
+          // If it's a new .gallery-item (from 'Previous Shows and Videos')
+          else if (galleryItem && galleryItem.dataset.fullSrc) {
+              e.preventDefault(); // Prevent default link behavior if applicable (though new items don't have <a>)
+              openLightbox(galleryItem, grid.querySelectorAll('.gallery-item[data-full-src]'));
+          }
+      });
+  });
+
+  // Event listeners for lightbox controls
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxPrev.addEventListener('click', showPrevItem);
+  lightboxNext.addEventListener('click', showNextItem);
+
+  // Close lightbox on escape key
+  document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightboxOverlay.style.display === 'flex') {
+          closeLightbox();
+      }
+  });
+
+  // Close lightbox when clicking outside the content
+  lightboxOverlay.addEventListener('click', (e) => {
+      if (e.target === lightboxOverlay) {
+          closeLightbox();
+      }
+  });
+
+  // --- Multilingual Script ---
+  // First, let's collect the original English text from the HTML
+  function collectOriginalEnglishText() {
+    const elements = document.querySelectorAll("[data-i18n-key]");
+    const originalTexts = {};
+    
+    elements.forEach(el => {
+      const key = el.dataset.i18nKey; // Corrected: i18nKey
+      if (el.tagName === 'TITLE') {
+        originalTexts[key] = el.textContent;
+      } else if (el.textContent && el.textContent.trim()) { // Use textContent for consistency
+        originalTexts[key] = el.textContent;
+      }
+    });
+    
+    return originalTexts;
+  }
+
+  const originalEnglish = collectOriginalEnglishText();
+
+  const translations = {
+    en: originalEnglish, // Use the original HTML text for English
+
+    zu: {
+      "nav.home":"Ekhaya",
+      "nav.about":"Mayelana",
+      "nav.services":"Izinsiza",
+      "nav.events":"Imicimbi",
+      "nav.gallery":"Izithombe",
+      "nav.blog":"Ibhulogi",
+      "nav.contact":"Xhumana",
+      "gallery.pageTitle":"Izithombe | I-Haya Ngizwe Events",
+      "gallery.heading":"Izithombe",
+      "gallery.tagline":"Chofoza ifolda ukuze uhlole izikhathi ezithile emibukisweni yethu edlule.",
+      "gallery.folder.malePoets":"Izimbongi Zabesilisa Ezi-5 Ezinkulu",
+      "gallery.malePoets.sevenPerfection":"OKUPHELELE OKUYISIKHOMBA",
+      "gallery.malePoets.blackChild":"UMNTWANA OMNYAMA",
+      "gallery.malePoets.phokaDePoet":"IPHOKA IMBONGI",
+      "gallery.malePoets.skhokhoSamariko":"ISKHOKHO SAMARIKO",
+      "gallery.malePoets.youngerDrill":"UKUZILOLONGA OKUSENCANE",
+      "gallery.folder.femalePoets":"Izimbongi Zabesifazane Ezi-5 Ezinkulu",
+      "gallery.femalePoets.darkDindi":"IDINDI ELIMNYAMA",
+      "gallery.femalePoets.kaytone":"I-KAYTONE",
+      "gallery.femalePoets.liricalkhet":"I-LIRICALKHET",
+      "gallery.femalePoets.candiiiceM":"I-CANDIIICE.M",
+      "gallery.femalePoets.malungeloLizwi":"MALUNGELO & LIZWI",
+      "gallery.folder.womanInPoetry":"Umfazi ezinkondlweni",
+      "gallery.folder.eventHighlights":"Okugqamile Kwemicimbi",
+      "gallery.highlights.thabangMaduna":"UMC: THABANG MADUNA",
+      "gallery.highlights.reginaMaphosa":"UMC: REGINA MAPHOSA",
+      "gallery.highlights.vocalvee":"ISENZO SOKUVULA: I-VOCALVEE",
+      "gallery.highlights.closingBig5":"Ukuvala Okukhulu",
+      "gallery.folder.previousShowsVideos":"Imibukiso Yangaphambilini Namavidiyo",
+      "gallery.previousShowsVideos.showMoment1": "Isikhathi Sokubonisa 1", // Added translation
+      "gallery.previousShowsVideos.showVideo1": "Ividiyo Yokubonisa 1",   // Added translation
+      "gallery.previousShowsVideos.showMoment2": "Isikhathi Sokubonisa 2", // Added translation
+      "gallery.previousShowsVideos.showMoment3": "Isikhathi Sokubonisa 3", // Added translation
+      "gallery.previousShowsVideos.showVideo2": "Ividiyo Yokubonisa 2",   // Added translation
+      "footer.tagline":"Sakha Izikhathi Eziyigugu Ezingasoze Zalibaleka",
+      "loading.text":"Ilayisha ulimi..."
+    },
+
+    st: {
+      "nav.home":"Lehae",
+      "nav.about":"Mabapi",
+      "nav.services":"Ditshebeletso",
+      "nav.events":"Diketsahalo",
+      "nav.gallery":"Gallery",
+      "nav.blog":"Blog",
+      "nav.contact":"Ikopanye",
+      "gallery.pageTitle":"Gallery | Haya Ngizwe Events",
+      "gallery.heading":"Gallery",
+      "gallery.tagline":"Tobetsa foldara ho hlahloba dinako tse ding tsa dipontsho tsa rona tse fetileng.",
+      "gallery.folder.malePoets":"Banna ba Baholo ba 5 ba Dithothokiso",
+      "gallery.malePoets.sevenPerfection":"SEPHEREFEKSE SE SUPILENG",
+      "gallery.malePoets.blackChild":"NGWANA O MOTSHO",
+      "gallery.malePoets.phokaDePoet":"PHOKA THOTHOKISO",
+      "gallery.malePoets.skhokhoSamariko":"SKHOKHO SAMARIKO",
+      "gallery.malePoets.youngerDrill":"YOUNGER DRILL",
+      "gallery.folder.femalePoets":"Basadi ba Baholo ba 5 ba Dithothokiso",
+      "gallery.femalePoets.darkDindi":"DINDI E NTSHO",
+      "gallery.femalePoets.kaytone":"KAYTONE",
+      "gallery.femalePoets.liricalkhet":"LIRICALKHET",
+      "gallery.femalePoets.candiiiceM":"CANDIIICE.M",
+      "gallery.femalePoets.malungeloLizwi":"MALUNGELO & LIZWI",
+      "gallery.folder.womanInPoetry":"Mosadi dithothokisong",
+      "gallery.folder.eventHighlights":"Diketsahalo Tse Hlahang",
+      "gallery.highlights.thabangMaduna":"MC: THABANG MADUNA",
+      "gallery.highlights.reginaMaphosa":"MC: REGINA MAPHOSA",
+      "gallery.highlights.vocalvee":"KETSOPATHO E QALANG: VOCALVEE",
+      "gallery.highlights.closingBig5":"Ho Koala ho Hoholo",
+      "gallery.folder.previousShowsVideos":"Dipontsho Tse Fetileng le Divideo",
+      "gallery.previousShowsVideos.showMoment1": "Nako ea Pontšo 1",   // Added translation
+      "gallery.previousShowsVideos.showVideo1": "Video ea Pontšo 1",     // Added translation
+      "gallery.previousShowsVideos.showMoment2": "Nako ea Pontšo 2",   // Added translation
+      "gallery.previousShowsVideos.showMoment3": "Nako ea Pontšo 3",   // Added translation
+      "gallery.previousShowsVideos.showVideo2": "Video ea Pontšo 2",     // Added translation
+      "footer.tagline":"Ho Bopa Dinako Tse Ke Keng Tsa Lebaleha",
+      "loading.text":"Ho lata puo..."
+    }
+  };
+
+  // Add loading text to English translations if not already there
+  if (!translations.en["loading.text"]) {
+    translations.en["loading.text"] = "Loading language...";
+  }
+  // Add new folder translation to English if not already there
+  if (!translations.en["gallery.folder.previousShowsVideos"]) {
+    translations.en["gallery.folder.previousShowsVideos"] = "Previous Shows and Videos";
+  }
+  // Add new item translations to English
+  if (!translations.en["gallery.previousShowsVideos.showMoment1"]) translations.en["gallery.previousShowsVideos.showMoment1"] = "Show Moment 1";
+  if (!translations.en["gallery.previousShowsVideos.showVideo1"]) translations.en["gallery.previousShowsVideos.showVideo1"] = "Show Video 1";
+  if (!translations.en["gallery.previousShowsVideos.showMoment2"]) translations.en["gallery.previousShowsVideos.showMoment2"] = "Show Moment 2";
+  if (!translations.en["gallery.previousShowsVideos.showMoment3"]) translations.en["gallery.previousShowsVideos.showMoment3"] = "Show Moment 3";
+  if (!translations.en["gallery.previousShowsVideos.showVideo2"]) translations.en["gallery.previousShowsVideos.showVideo2"] = "Show Video 2";
+
+
+  function applyLanguage(lang){
+    document.querySelectorAll("[data-i18n-key]").forEach(el=>{
+      const key = el.dataset.i18nKey; // Corrected: i18nKey
+      if(translations[lang] && translations[lang][key]) {
+        // For the title tag, we need to update textContent, not innerText
+        if (el.tagName === 'TITLE') {
+          el.textContent = translations[lang][key];
+        } else {
+          el.textContent = translations[lang][key]; // Use textContent for consistency
+        }
+      }
+    });
+  }
+
+  function showLoading() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    loadingOverlay.classList.add('active');
+  }
+
+  function hideLoading() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    loadingOverlay.classList.remove('active');
+  }
+
+  // Language change handler
+  function changeLanguage(lang) {
+    // Close mobile menu
+    navMenu.classList.remove('active');
+    
+    // Show loading overlay
+    showLoading();
+    
+    // Update language in localStorage
+    localStorage.setItem("language", lang);
+    
+    // Apply language after a short delay to show loading effect
+    setTimeout(() => {
+      applyLanguage(lang);
+      
+      // Update selector value
+      selector.value = lang;
+      
+      // Hide loading overlay
+      hideLoading();
+    }, 600); // 600ms delay to show loading effect
+  }
+
+  // Initialize
+  const selector = document.getElementById("language-selector");
+  const savedLang = localStorage.getItem("language") || "en";
+  selector.value = savedLang;
+
+  // Always apply language on load to ensure all elements are processed
+  applyLanguage(savedLang);
+
+  // Event listener for language selector
+  selector.addEventListener("change", (e)=>{
+    const selectedLang = e.target.value;
+    changeLanguage(selectedLang);
+  });
+
+  // Optional: If you want to use the button language selector too
+  document.querySelectorAll('.language-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const lang = e.target.getAttribute('data-lang');
+      changeLanguage(lang);
+    });
+  });
+  </script>
+ </body>
+</html>

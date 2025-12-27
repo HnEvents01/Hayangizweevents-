@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spotlight: BLACK CHILD | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #fffefc;">
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="events.html">Events</a>
+      <a href="poetry-registration.html">Poetry Slam</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="blog.html" class="active">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  
+  <div class="page-title">
+      <h1>Poet Spotlight</h1>
+  </div>
+
+  <div class="container">
+    <div class="post">
+      <img class="card-banner-image" src="IMAGES/BLACK CHILD.jpg" alt="BLACK CHILD">
+      <div class="post-content">
+        <span class="meta-info">Event Report | Published August 20, 2025</span>
+        <h2>BLACK CHILD: The Voice of a Generation</h2>
+        <h3>About the Artist</h3>
+        <p>BLACK CHILD is a storyteller at heart, a griot for the modern age. His poetry is a powerful conduit for the narratives of his community, tackling issues of social justice, heritage, and resilience with unflinching honesty. His stage presence is magnetic, characterized by a raw, emotive energy that transforms his words into a visceral experience for the audience.</p>
+        <h3>Performance at The Big 5 Poetry Experience</h3>
+        <p>On the night of August 2nd, BLACK CHILD held the audience in the palm of his hand. His performance was a fiery, passionate display of spoken word at its most impactful. Each line was delivered with a conviction that resonated throughout the venue, earning him thunderous applause. He spoke truth to power, yet his message was one of hope and empowerment, solidifying his status as a vital voice in the contemporary poetry scene.</p>
+        <div class="video-link-container">
+          <h3>Watch the Performance</h3>
+          <p>Experience Black Child's captivating performance from the Big 5 Poetry Experience:</p>
+          <a href="https://youtu.be/7GCwNmMSk9c?si=en9nA2y0aeDs3Cqs" 
+             target="_blank" 
+             class="youtube-link">
+            ▶ Watch on YouTube
+          </a>
+        </div>
+        <a href="gallery.html" class="back-link">&larr; Back to Gallery</a>
+      </div>
+    </div>
+  </div>
+  
+   <footer>© 2025 Haya Ngizwe Events · <br>Creating Moments To Cherish Forever
+    
+  </footer>
+  
+  <script>
+    const menu = document.querySelector('#mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+  </script>
+
+</body>
+</html>

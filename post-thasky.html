@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>THASKY - Headliner Performance | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .post-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+    
+    .post-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #8e0000;
+      padding-bottom: 1.5rem;
+    }
+    
+    .post-title {
+      color: #8e0000;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .post-subtitle {
+      color: #666;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .headliner-badge {
+      display: inline-block;
+      background: #8e0000;
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .singer-badge {
+      display: inline-block;
+      background: #008e8e;
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      margin: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .featured-image {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+    
+    .post-content {
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+    
+    .post-content p {
+      margin-bottom: 1.5rem;
+    }
+    
+    .performance-highlights {
+      background: #fff8f8;
+      border-left: 4px solid #8e0000;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .performance-highlights h3 {
+      color: #8e0000;
+      margin-top: 0;
+    }
+    
+    .back-button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 1.5rem;
+      background: #8e0000;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .back-button:hover {
+      background: #6e0000;
+      transform: translateY(-2px);
+    }
+    
+    .mood-activation {
+      background: #fffff0;
+      border: 2px solid #ffd700;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .mood-activation h3 {
+      color: #8e0000;
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body style="background-color: #FDFDFD;">
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  
+  <div class="main-content">
+    <div class="post-container">
+      <div class="post-header">
+        <div class="headliner-badge">HEADLINER</div>
+        <div class="singer-badge">SINGER & PERFORMER</div>
+        <h1 class="post-title">THASKY</h1>
+        <div class="post-subtitle">Dynamic Performance at Woman in Poetry Showcase</div>
+      </div>
+      
+      <img src="IMAGES/Thasky.jpg" alt="THASKY headliner performance" class="featured-image">
+      
+      <div class="post-content">
+        <div class="mood-activation">
+          <h3>🎵 MOOD ACTIVATOR EXTRAORDINAIRE 🎵</h3>
+          <p><strong>Thasky is not just a performer—he's an experience.</strong> As a gifted singer, he took to the stage and immediately activated everyone's mood, transforming the atmosphere with his infectious energy and powerful vocals. From the first note, he had the entire audience captivated and engaged.</p>
+        </div>
+        
+     
+        
+        <p>From the moment she stepped onto the stage, Thasky commanded attention with his confident presence and commanding voice. His music explored themes of empowerment, identity, and social commentary, delivered with a rhythm and cadence that felt both contemporary and timeless.</p>
+        
+
+        
+        <p>Thasky's performance was particularly notable for its authenticity and connection with the audience.</p>
+        
+ 
+      </div>
+      
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="gallery.html" class="back-button">← Back to Gallery</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Haya Ngizwe Events ·<br>
+    Creating Moments to Cherish Forever<br>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menu = document.querySelector('#mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+  </script>
+</body>
+</html>

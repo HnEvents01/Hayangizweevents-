@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>C4 - Open Mic Performance | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .post-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+    
+    .post-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #8e0000;
+      padding-bottom: 1.5rem;
+    }
+    
+    .post-title {
+      color: #8e0000;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .openmic-badge {
+      display: inline-block;
+      background: #4CAF50;
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .featured-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+    
+    .youtube-section {
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      margin: 2rem 0;
+      border: 2px solid #FF0000;
+    }
+    
+    .youtube-icon {
+      font-size: 3rem;
+      color: #FF0000;
+      margin-bottom: 1rem;
+    }
+    
+    .youtube-button {
+      display: inline-block;
+      background: #FF0000;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+    
+    .youtube-button:hover {
+      background: #cc0000;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255,0,0,0.2);
+    }
+    
+    .back-button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 1.5rem;
+      background: #8e0000;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .back-button:hover {
+      background: #6e0000;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body style="background-color: #FDFDFD;">
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  
+  <div class="main-content">
+    <div class="post-container">
+      <div class="post-header">
+        <div class="openmic-badge">OPEN MIC ARTIST</div>
+        <h1 class="post-title">C4</h1>
+      </div>
+      
+      <img src="IMAGES/C4.jpg" alt="C4 open mic performance" class="featured-image">
+      
+      <div class="youtube-section">
+        <div class="youtube-icon">▶</div>
+        <h2>Watch C4's Performance</h2>
+        <p>Experience C4's captivating open mic performance on YouTube</p>
+        <a href="https://youtu.be/X0THkTivahc?si=CZuw-eUvPgzJBHw2" target="_blank" class="youtube-button">
+          Watch on YouTube
+        </a>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+
+        </p>
+      </div>
+      
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="gallery.html" class="back-button">← Back to Gallery</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Haya Ngizwe Events ·<br>
+    Creating Moments to Cherish Forever<br>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menu = document.querySelector('#mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+  </script>
+</body>
+</html>

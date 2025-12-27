@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BRA MFANA - Master of Ceremonies | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .post-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+    
+    .post-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #8e0000;
+      padding-bottom: 1.5rem;
+    }
+    
+    .post-title {
+      color: #8e0000;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .post-subtitle {
+      color: #666;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .mc-badge {
+      display: inline-block;
+      background: #8e0000;
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .featured-image {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+    
+    .post-content {
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+    
+    .post-content p {
+      margin-bottom: 1.5rem;
+    }
+    
+    .mc-highlights {
+      background: #fff8f8;
+      border-left: 4px solid #8e0000;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .mc-highlights h3 {
+      color: #8e0000;
+      margin-top: 0;
+    }
+    
+    .back-button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 1.5rem;
+      background: #8e0000;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .back-button:hover {
+      background: #6e0000;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body style="background-color: #FDFDFD;">
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  
+  <div class="main-content">
+    <div class="post-container">
+      <div class="post-header">
+        <div class="mc-badge">EVENT MC</div>
+        <h1 class="post-title">BRA MFANA</h1>
+        <div class="post-subtitle">Master of Ceremonies at Woman in Poetry Showcase</div>
+      </div>
+      
+      <img src="IMAGES/Bra mfana.jpg" alt="Bra Mfana as MC at Woman in Poetry" class="featured-image">
+      
+      <div class="post-content">
+        <p>Bra Mfana brought exceptional hosting skills to the stage as the Master of Ceremonies for the Woman in Poetry showcase. With his natural charisma, impeccable timing, and deep respect for the art form, he guided the evening with professionalism and warmth, ensuring a seamless flow between performances.</p>
+        
+        <p>From the moment he welcomed the audience, Bra Mfana established an atmosphere of respect and anticipation. His introductions were more than just announcements—they were thoughtful preludes that honored each poet's unique perspective and created meaningful context for their work to be received.</p>
+        
+        <div class="mc-highlights">
+          <h3>MC Highlights</h3>
+          <p><strong>Engaging Opening:</strong> Set the perfect tone for the evening with a warm, inclusive welcome that immediately connected with the audience.</p>
+          <p><strong>Seamless Transitions:</strong> Expertly guided the flow between performances, maintaining the event's momentum while allowing each moment to breathe.</p>
+          <p><strong>Audience Connection:</strong> Masterfully balanced formal hosting duties with genuine, heartfelt interactions that made everyone feel included.</p>
+          <p><strong>Poet Introductions:</strong> Delivered insightful, respectful introductions that elevated each performer and prepared the audience for their work.</p>
+          <p><strong>Time Management:</strong> Kept the event on schedule gracefully without making performers or audience feel rushed.</p>
+        </div>
+        
+        <p>What set Bra Mfana apart was his understanding of his role as a facilitator rather than a performer. He knew exactly when to command attention and when to step back, allowing the poets' voices to take center stage. His ability to read the room and adjust his approach accordingly demonstrated his experience and skill as a host.</p>
+        
+        <p>The success of "Woman in Poetry" was significantly enhanced by Bra Mfana's expert hosting. By the evening's conclusion, it was evident that he had done more than just host an event—he had curated an experience that left both performers and audience members feeling valued and heard.</p>
+        
+        <p>Bra Mfana's contribution ensured that "Woman in Poetry" was not merely a sequence of performances, but a cohesive journey that celebrated the power of women's voices in poetry.</p>
+      </div>
+      
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="gallery.html" class="back-button">← Back to Gallery</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Haya Ngizwe Events ·<br>
+    Creating Moments to Cherish Forever<br>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menu = document.querySelector('#mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+  </script>
+</body>
+</html>
