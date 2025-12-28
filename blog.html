@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #fffefc;">
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="blog.html" class="active">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  
+  <div class="page-title">
+      <h1>Blog & News</h1>
+      <p>Stay updated with our latest stories and upcoming events.</p>
+  </div>
+
+  <div class="container">
+    <div class="post">
+      <img class="card-banner-image" src="IMAGES/POETRY SLAM.png" alt="Poetry Slam 2026 Announcement">
+      <div class="post-content">
+        <h2>The Countdown Begins: Haya Ngizwe Poetry Slam 2026</h2>
+        <small>Published on July 20, 2025</small>
+        <p>Mark your calendars and start preparing! The renowned Haya Ngizwe Poetry Slam is set to make its grand return in 2026. While the final date and venue are still under wraps, the anticipation is already building for what promises to be our biggest and most competitive slam yet. Poets from all corners of Mzansi will gather to compete for glory, honor, and the coveted title. Stay tuned for more announcements!</p>
+      </div>
+    </div>
+  </div>
+  
+   <div class="container">
+    <!-- NEW BLOG POST: DANCE DOMINION -->
+    <div class="post">
+      <img class="card-banner-image" src="IMAGES/Dance.png" alt="Dance Dominion 2026">
+      <div class="post-content">
+        <h2>News: Dance Dominion 2026 Announced!</h2>
+        <small>Published on July 25, 2025</small>
+        <p>We are excited to announce a new addition to the Haya Ngizwe family: Dance Dominion 2026. This showcase will celebrate the rhythm and spirit of local dance talent. More details coming soon!</p>
+      </div>
+    </div> <!-- Close post -->
+  </div> <!-- Close container -->
+  <footer>
+    © 2025 Haya Ngizwe Events ·<br>
+    Creating Moments to Cherish Forever<br>
+  </footer>
+  
+  <script>
+    const menu = document.querySelector('#mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+  </script>
+
+</body>
+</html>

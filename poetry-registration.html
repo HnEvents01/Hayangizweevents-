@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register | Poetry Slam 2026</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #FFF8F8;">
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="page-title">
+    <h1>The Big 5 Poetry Slam 2026</h1>
+    <p>Compete in the biggest poetry showdown and make your voice heard!</p>
+  </div>
+
+  <div class="container form-container">
+    <div class="countdown" id="countdown">
+      <span>Countdown loading...</span>
+    </div>
+    <div class="closed-message">
+        <h3>Registrations Are Currently Closed</h3>
+        <p>Thank you for your interest in the The Big 5 Poetry Slam 2026. Registrations have not yet opened. Please check back later for updates!</p>
+    </div>
+    <form>
+      <fieldset disabled>
+          <label for="fullname">Full Name:</label>
+          <input type="text" id="fullname" name="fullname" placeholder="Registrations are closed" />
+          
+          <label for="email">Email Address:</label>
+          <input type="email" id="email" name="email" placeholder="Registrations are closed" />
+          
+          <label for="phone">Phone Number:</label>
+          <input type="tel" id="phone" name="phone" placeholder="Registrations are closed" />
+          
+          <label for="bio">Short Artist Bio / Message:</label>
+          <textarea id="bio" name="bio" rows="4" placeholder="Registrations are closed"></textarea>
+          
+          <button type="submit">Submit Registration</button>
+      </fieldset>
+    </form>
+  </div>
+  
+  <footer>
+    © 2025 Haya Ngizwe Events · <span>Creating Moments to Cherish forever</span><br>
+  </footer>
+
+  <script>
+    const menu = document.querySelector('#mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+    
+    const countdownEl = document.getElementById("countdown");
+    const targetDate = new Date("August 1, 2026 00:00:00").getTime();
+    
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      let countdownText = "";
+
+      if (distance < 0) {
+        countdownText = "The 2026 event season is here!";
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        countdownText = `Event starts in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+      countdownEl.innerHTML = countdownText; 
+    }
+    
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+
+</body>
+</html>

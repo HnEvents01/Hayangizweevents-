@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="background-color:#FFF8F8;">
+
+<header>
+  <a href="index.html" class="logo-container">
+    <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+  </a>
+
+  <div class="menu-toggle" id="mobile-menu">
+    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+  </div>
+
+  <nav class="nav-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html" class="active">About</a>
+    <a href="services.html">Services</a>
+    <a href="events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="main-content">
+  <div class="about-page-container">
+
+    <h1>ABOUT US</h1>
+
+    <p>Haya Ngizwe Events was born from a passion for empowering voices and creating platforms for artistic expression. We believe in the transformative power of art, especially spoken word poetry, to connect communities and inspire change.</p>
+    <p>Our mission is to deliver professional, high-impact events that are both memorable and meaningful. From intimate poetry slams to large-scale cultural festivals, we handle every detail with creativity and precision.</p>
+
+    <div class="founder-section">
+      <img class="founder-image" src="IMAGES/Kgabo.jpg" alt="Kgabo Mabokela">
+      <div class="founder-info">
+        <h3>Acting Manager</h3>
+        <p>Being part of Haya Ngizwe Events means contributing to a movement that uplifts artists and unites communities through powerful stories.</p>
+        <strong>- Kgabo Mabokela</strong>
+      </div>
+    </div>
+
+    <div class="founder-section">
+      <img class="founder-image" src="IMAGES/William.jpg" alt="William Sete">
+      <div class="founder-info">
+        <h3>Acting Technical Manager</h3>
+        <p>My role is to ensure every performance and moment is delivered flawlessly through technical excellence.</p>
+        <strong>- William Sete</strong>
+      </div>
+    </div>
+
+    <div class="founder-section">
+      <img class="founder-image" src="IMAGES/BHEKUMUZI.jpeg" alt="Bhekumuzi Mahomane">
+      <div class="founder-info">
+        <h3>A Word From Our Founder</h3>
+        <p>We started Haya Ngizwe to build a home for stories that need to be heard and remembered.</p>
+        <strong>- Bhekumuzi Mahomane</strong>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2025 Haya Ngizwe Events · <br>
+  Creating moments to cherish forever
+</footer>
+
+<!-- MOBILE MENU -->
+<script>
+  const menu = document.querySelector('#mobile-menu');
+  const navMenu = document.querySelector('.nav-menu');
+  menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+</script>
+
+</body>
+</html>

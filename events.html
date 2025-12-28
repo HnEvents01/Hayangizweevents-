@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Events | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #FFF8F8;">
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="events.html" class="active">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+<div class="main-content"></div>
+  <div class="container">
+    <h1 class="section-heading">Upcoming Events</h1>
+    
+    <!-- Event 1 -->
+    <div class="event">
+      <img class="card-banner-image" src="IMAGES/POETRY SLAM.png" alt="The Big 5 Poetry Slam 2026">
+      <div class="event-content">
+        <h2>The Big 5 Poetry Slam 2026</h2>
+        <p><strong>Date:</strong> Coming in 2026 (Date TBA)</p>
+        <p><strong>Venue:</strong> To Be Announced</p>
+        <p>The ultimate poetry showdown returns! Poets from across the nation will compete for the championship title...</p>
+        <p class="status tba">Details Coming Soon</p>
+      </div>
+    </div>
+
+    <!-- Event 2 -->
+    <div class="event">
+      <img class="card-banner-image" src="IMAGES/Dance.png" alt="Dance Dominion 2026">
+      <div class="event-content">
+        <h2>Dance Dominion 2026</h2>
+        <p><strong>Date:</strong> Coming in 2026 (Date TBA)</p>
+        <p><strong>Venue:</strong> To Be Announced</p>
+        <p>A new showcase celebrating the rhythm and spirit of local dance talent.</p>
+        <p class="status tba">Details Coming Soon</p>
+      </div>
+    </div>
+
+    <!-- Previous Events here... -->
+    <h1 class="section-heading">Previous Events</h1>
+
+    <!-- Previous Event: Woman in Poetry -->
+    <div class="event">
+      <img class="card-banner-image" src="IMAGES/Upcoming event.jpg" alt="WOMAN IN POETRY">
+      <div class="event-content">
+        <h2>WOMAN IN POETRY: UNAPOLOGETICALLY HERSELF</h2>
+        <p><strong>Date:</strong> 27 September 2025</p>
+        <p><strong>Venue:</strong> The love of God disability centre</p>
+        <p>A powerful showcase celebrating the voices, stories, and unapologetic truth of women in poetry. Join us for a day of inspiring performances and heartfelt connection.</p>
+        <p class="status confirmed">Past Event</p>
+      </div>
+    </div>
+
+    <!-- Previous Event: Big 5 Poetry -->
+    <div class="event">
+      <img class="card-banner-image" src="IMAGES/THANKS.jpeg" alt="PREVIOUS EVENT">
+      <div class="event-content">
+        <h2>THE BIG 5 POETRY EXPERIENCE</h2>
+        <p><strong>Date:</strong> 02 AUGUST 2025</p>
+        <p><strong>Venue:</strong> The love of God disability centre</p>
+        <p>A powerful show that showcased the talented poets in Tembisa.</p>
+        <p class="status confirmed">Past Event</p>
+      </div>
+    </div>
+
+</div> <!-- IMPORTANT: This closes the main container before the footer -->
+  
+  <footer>
+    © 2025 Haya Ngizwe Events ·<br>
+    Creating Moments to Cherish Forever<br>
+  </footer>
+
+  <script>
+    const menu = document.querySelector('#mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+  </script>
+
+</body>
+</html>
