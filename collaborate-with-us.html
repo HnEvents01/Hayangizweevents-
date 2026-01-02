@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Collaborate With Us | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    /* Custom styles for collaborate page */
+    .collaborate-hero {
+      background: linear-gradient(rgba(142, 0, 0, 0.85), rgba(142, 0, 0, 0.9)), url('IMAGES/collaborate-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 5rem 2rem;
+      text-align: center;
+      min-height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    
+    /* Animation Classes */
+    .animate-text {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s ease forwards;
+    }
+    
+    .animate-delay-1 {
+      animation-delay: 0.3s;
+    }
+    
+    .animate-delay-2 {
+      animation-delay: 0.6s;
+    }
+    
+    .animate-delay-3 {
+      animation-delay: 0.9s;
+    }
+    
+    .animate-card {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    
+    .card-1 { animation-delay: 0.2s; }
+    .card-2 { animation-delay: 0.4s; }
+    .card-3 { animation-delay: 0.6s; }
+    .card-4 { animation-delay: 0.8s; }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .collaborate-hero h1 {
+      font-size: 3.2rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    }
+    
+    .collaborate-hero p {
+      font-size: 1.3rem;
+      max-width: 800px;
+      margin-bottom: 2rem;
+    }
+    
+    .welcome-text {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+    
+    .welcome-text::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(to right, transparent, #d4a574, transparent);
+      animation: expandLine 1.5s ease-out forwards;
+    }
+    
+    @keyframes expandLine {
+      from {
+        width: 0;
+        opacity: 0;
+      }
+      to {
+        width: 150px;
+        opacity: 1;
+      }
+    }
+    
+    .collaboration-types {
+      background-color: #fff8f8;
+      padding: 4rem 2rem;
+    }
+    
+    .collab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .collab-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-top: 4px solid #8e0000;
+    }
+    
+    .collab-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(142, 0, 0, 0.15);
+    }
+    
+    .collab-card i {
+      font-size: 2.5rem;
+      color: #8e0000;
+      margin-bottom: 1rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .collab-card:hover i {
+      transform: scale(1.2) rotate(5deg);
+    }
+    
+    .collab-card h3 {
+      color: #8e0000;
+      margin-bottom: 1rem;
+      transition: color 0.3s ease;
+    }
+    
+    .collab-card:hover h3 {
+      color: #d4a574;
+    }
+    
+    /* Advanced Form Styles */
+    .collaborate-form-container {
+      max-width: 800px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards 1.2s;
+    }
+    
+    .form-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards 1.5s;
+    }
+    
+    .form-header h2 {
+      color: #8e0000;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .form-header p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+    
+    .advanced-form {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards 1.8s;
+    }
+    
+    .form-section {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid #f0f0f0;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    
+    .form-section:nth-child(1) { animation-delay: 2s; }
+    .form-section:nth-child(2) { animation-delay: 2.2s; }
+    .form-section:nth-child(3) { animation-delay: 2.4s; }
+    .form-section:nth-child(4) { animation-delay: 2.6s; }
+    .form-section:nth-child(5) { animation-delay: 2.8s; }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #8e0000;
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #ffd6d6;
+    }
+    
+    .section-title i {
+      font-size: 1.2rem;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: fadeInRight 0.5s ease forwards;
+    }
+    
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .form-group:nth-child(1) { animation-delay: 2.1s; }
+    .form-group:nth-child(2) { animation-delay: 2.2s; }
+    .form-group:nth-child(3) { animation-delay: 2.3s; }
+    .form-group:nth-child(4) { animation-delay: 2.4s; }
+    .form-group:nth-child(5) { animation-delay: 2.5s; }
+    
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+    
+    .form-group label i {
+      color: #8e0000;
+      font-size: 0.9rem;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: 'Segoe UI', sans-serif;
+      transition: all 0.3s ease;
+      background-color: #f9f9f9;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: #8e0000;
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba(142, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e0000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+      background-size: 15px;
+      padding-right: 40px;
+    }
+    
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .file-upload {
+      position: relative;
+      border: 2px dashed #d4a574;
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      background-color: #fffcf8;
+      transition: all 0.3s ease;
+    }
+    
+    .file-upload:hover {
+      background-color: #fff8f0;
+      border-color: #8e0000;
+      transform: translateY(-3px);
+    }
+    
+    .file-upload input[type="file"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    
+    .file-upload-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .file-upload-content i {
+      font-size: 2.5rem;
+      color: #d4a574;
+    }
+    
+    .file-list {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #f8f8f8;
+      border-radius: 8px;
+      display: none;
+    }
+    
+    /* Donation Section Styles */
+    .donation-section {
+      background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(212, 165, 116, 0.05) 100%);
+      border: 2px solid #d4a574;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .donation-section.active {
+      display: block;
+    }
+    
+    .donation-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .donation-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .donation-option:hover {
+      border-color: #d4a574;
+      transform: translateY(-3px);
+    }
+    
+    .donation-option.selected {
+      border-color: #8e0000;
+      background-color: #fff8f8;
+    }
+    
+    .donation-amount {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #8e0000;
+      margin-bottom: 0.5rem;
+    }
+    
+    .donation-custom {
+      grid-column: 1 / -1;
+    }
+    
+    .custom-amount {
+      width: 100%;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding: 0.5rem;
+      border: 2px solid #d4a574;
+      border-radius: 8px;
+      background: white;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: fadeInRight 0.5s ease forwards;
+    }
+    
+    .checkbox-group:nth-child(1) { animation-delay: 2.9s; }
+    .checkbox-group:nth-child(2) { animation-delay: 3s; }
+    .checkbox-group:nth-child(3) { animation-delay: 3.1s; }
+    .checkbox-group:nth-child(4) { animation-delay: 3.2s; }
+    
+    .checkbox-group input[type="checkbox"] {
+      margin-top: 5px;
+      accent-color: #8e0000;
+    }
+    
+    .checkbox-group label {
+      font-weight: normal;
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    .checkbox-group label a {
+      color: #8e0000;
+      text-decoration: none;
+    }
+    
+    .checkbox-group label a:hover {
+      text-decoration: underline;
+    }
+    
+    .submit-section {
+      text-align: center;
+      margin-top: 2.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards 3.3s;
+    }
+    
+    .btn-submit {
+      background: linear-gradient(135deg, #8e0000 0%, #a10000 100%);
+      color: white;
+      padding: 1.2rem 3rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(142, 0, 0, 0.2);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .btn-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(142, 0, 0, 0.3);
+      background: linear-gradient(135deg, #a10000 0%, #8e0000 100%);
+      animation: pulse 1s infinite;
+    }
+    
+    .btn-submit i {
+      font-size: 1.2rem;
+    }
+    
+    .form-note {
+      text-align: center;
+      color: #777;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+    
+    /* Success Message */
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 3rem;
+      background: linear-gradient(135deg, rgba(37, 211, 102, 0.1) 0%, rgba(37, 211, 102, 0.05) 100%);
+      border-radius: 15px;
+      border-left: 6px solid #25d366;
+      margin-top: 2rem;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .success-message i {
+      font-size: 4rem;
+      color: #25d366;
+      margin-bottom: 1.5rem;
+      animation: float 2s ease-in-out infinite;
+    }
+    
+    .success-message h3 {
+      color: #075e54;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .collaborate-hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .collaborate-hero p {
+        font-size: 1.1rem;
+      }
+      
+      .advanced-form {
+        padding: 1.5rem;
+      }
+      
+      .form-header h2 {
+        font-size: 2rem;
+      }
+      
+      .donation-options {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .donation-options {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Celebration Animation */
+    .celebration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+      display: none;
+    }
+    
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 20px;
+      background: #8e0000;
+      top: 0;
+      opacity: 0;
+    }
+    
+    .confetti:nth-child(odd) {
+      background: #d4a574;
+    }
+  </style>
+</head>
+<body style="background-color: #F9F9F9;">
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+      <a href="collaborate.html" class="active">Collaborate</a>
+    </nav>
+  </header>
+
+  <!-- Celebration Animation Container -->
+  
+  <div class="celebration" id="celebration"></div>
+
+  <section class="collaborate-hero">
+    <div class="welcome-text animate-text">
+      <h1>Welcome to Our Collaboration Space!</h1>
+    </div>
+    <p class="animate-text animate-delay-1">Let's create something extraordinary together. Whether you have an event idea, partnership proposal, or creative project, we're excited to hear from you.</p>
+    <div class="animate-text animate-delay-2 pulse-animation">
+      <i class="fas fa-heart" style="font-size: 2rem; color: #d4a574; margin: 0 10px;"></i>
+      <i class="fas fa-lightbulb" style="font-size: 2rem; color: #d4a574; margin: 0 10px;"></i>
+      <i class="fas fa-handshake" style="font-size: 2rem; color: #d4a574; margin: 0 10px;"></i>
+    </div>
+  </section>
+
+  <section class="collaboration-types">
+    <div class="container">
+      <h2 style="text-align: center; color: #8e0000; margin-bottom: 3rem;" class="animate-text animate-delay-3">Ways We Collaborate</h2>
+      <div class="collab-grid">
+        <div class="collab-card animate-card card-1">
+          <i class="fas fa-microphone-alt float-animation"></i>
+          <h3>Event Proposals</h3>
+          <p>Have an event idea? Let's co-create poetry slams, cultural festivals, or artistic showcases that resonate with communities.</p>
+        </div>
+        
+        <div class="collab-card animate-card card-2">
+          <i class="fas fa-handshake float-animation"></i>
+          <h3>Sponsorship & Partnerships</h3>
+          <p>Join us as a sponsor or partner to support emerging artists and cultural initiatives while gaining brand exposure.</p>
+        </div>
+        
+        <div class="collab-card animate-card card-3">
+          <i class="fas fa-users float-animation"></i>
+          <h3>Artist Collaborations</h3>
+          <p>Performers, poets, dancers, and artists - let's feature your talent at our events or create joint projects.</p>
+        </div>
+        
+        <div class="collab-card animate-card card-4">
+          <i class="fas fa-video float-animation"></i>
+          <h3>Media & Production</h3>
+          <p>Video production, photography, or media coverage partnerships for events and artist features.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="collaborate-form-container">
+    <div class="form-header">
+      <h2>Submit Your Proposal</h2>
+      <p>Fill out the form below with details about your collaboration idea. Our team will review and get back to you within 2-3 business days.</p>
+    </div>
+    
+    <form class="advanced-form" id="collaborationForm" action="hngizwe@gmail.com" method="POST" enctype="multipart/form-data">
+      <!-- Personal Information Section -->
+      <div class="form-section">
+        <div class="section-title">
+          <i class="fas fa-user-circle"></i>
+          <span>Your Information</span>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fullName"><i class="fas fa-user"></i> Full Name *</label>
+            <input type="text" id="fullName" name="fullName" class="form-control" placeholder="Enter your full name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email"><i class="fas fa-envelope"></i> Email Address *</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="your.email@example.com" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone"><i class="fas fa-phone"></i> Phone Number *</label>
+            <input type="tel" id="phone" name="phone" class="form-control" placeholder="+27 12 345 6789" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="organization"><i class="fas fa-building"></i> Organization/Company</label>
+            <input type="text" id="organization" name="organization" class="form-control" placeholder="Your company name (if applicable)">
+          </div>
+        </div>
+      </div>
+
+<!-- Collaboration Details Section -->
+<div class="form-section">
+  <div class="section-title">
+    <i class="fas fa-lightbulb"></i>
+    <span>Collaboration Details</span>
+  </div>
+  
+  <div class="form-group">
+    <label for="collabType"><i class="fas fa-tags"></i> Type of Collaboration *</label>
+    <select id="collabType" name="collabType" class="form-control" required>
+      <option value="" disabled selected>Select collaboration type</option>
+      <option value="event-proposal">Event Proposal</option>
+      <option value="sponsorship">Sponsorship</option>
+      <option value="artist-feature">Artist/Performer Feature</option>
+      <option value="media-partnership">Media Partnership</option>
+      <option value="venue-partnership">Venue Partnership</option>
+      <option value="production-services">Production Services</option>
+      <option value="community-project">Community Project</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="projectTitle"><i class="fas fa-heading"></i> Project/Event Title *</label>
+    <input type="text" id="projectTitle" name="projectTitle" class="form-control" placeholder="Give your proposal a title" required>
+  </div>
+  
+  <div class="form-row">
+    <div class="form-group">
+      <label for="eventDate"><i class="fas fa-calendar-alt"></i> Proposed Date(s)</label>
+      <input type="text" id="eventDate" name="eventDate" class="form-control" placeholder="e.g., September 2025 or Flexible">
+    </div>
+    
+    <div class="form-group">
+      <label for="location"><i class="fas fa-map-marker-alt"></i> Proposed Location</label>
+      <input type="text" id="location" name="location" class="form-control" placeholder="City, Venue, or Virtual">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="budget"><i class="fas fa-money-bill-wave"></i> Estimated Budget Range (ZAR)</label>
+    <select id="budget" name="budget" class="form-control">
+      <option value="" selected>Select budget range</option>
+      <option value="under-5000">Under R5,000</option>
+      <option value="5000-20000">R5,000 - R20,000</option>
+      <option value="20000-50000">R20,000 - R50,000</option>
+      <option value="50000-100000">R50,000 - R100,000</option>
+      <option value="over-100000">Over R100,000</option>
+      <option value="to-be-discussed">To be discussed</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="description"><i class="fas fa-align-left"></i> Project Description *</label>
+    <textarea id="description" name="description" class="form-control" placeholder="Describe your collaboration idea in detail. Include goals, target audience, and why you think we'd be a good fit." required></textarea>
+  </div>
+</div>
+
+<!-- NEW: Donation Section -->
+<div class="form-section">
+  <div class="section-title">
+    <i class="fas fa-heart"></i>
+    <span>Optional: Support Our Mission</span>
+  </div>
+  
+  <div class="checkbox-group">
+    <input type="checkbox" id="includeDonation" name="includeDonation">
+    <label for="includeDonation">I would like to include a donation to support Haya Ngizwe Events' mission of empowering artists and creating community platforms</label>
+  </div>
+  
+  <div class="donation-section" id="donationSection">
+    <p style="margin-bottom: 1rem; color: #8e0000; font-weight: 600;">
+      <i class="fas fa-hand-holding-heart"></i> Thank you for considering a donation! Your support helps us continue our work with emerging artists.
+    </p>
+    
+    <div class="donation-options">
+      <div class="donation-option" data-amount="500">
+        <div class="donation-amount">R500</div>
+        <small>Supports one emerging artist</small>
+      </div>
+      
+      <div class="donation-option" data-amount="1000">
+        <div class="donation-amount">R1,000</div>
+        <small>Helps with venue costs</small>
+      </div>
+      
+      <div class="donation-option" data-amount="2500">
+        <div class="donation-amount">R2,500</div>
+        <small>Sponsors sound equipment</small>
+      </div>
+      
+      <div class="donation-option donation-custom">
+        <div class="donation-amount">Custom Amount</div>
+        <input type="number" id="customAmount" name="customAmount" class="custom-amount" placeholder="Enter amount" min="50" step="50">
+        <small>Any amount makes a difference!</small>
+      </div>
+    </div>
+    
+    <div class="form-group" style="margin-top: 1rem;">
+      <label for="donationPurpose"><i class="fas fa-bullseye"></i> Donation Purpose (Optional)</label>
+      <select id="donationPurpose" name="donationPurpose" class="form-control">
+        <option value="" selected>Where should we allocate your donation?</option>
+        <option value="artist-support">Artist Support & Development</option>
+        <option value="event-production">Event Production Costs</option>
+        <option value="community-outreach">Community Outreach Programs</option>
+        <option value="equipment">Equipment & Technology</option>
+        <option value="general-fund">General Operating Fund</option>
+      </select>
+    </div>
+    
+    <div class="checkbox-group">
+      <input type="checkbox" id="anonymousDonation" name="anonymousDonation">
+      <label for="anonymousDonation">I would like to remain anonymous as a donor</label>
+    </div>
+    
+    <div class="checkbox-group">
+      <input type="checkbox" id="receiptNeeded" name="receiptNeeded">
+      <label for="receiptNeeded">I need a donation receipt for tax purposes</label>
+    </div>
+    
+    <p style="font-size: 0.9rem; color: #666; margin-top: 1rem; font-style: italic;">
+      <i class="fas fa-info-circle"></i> Donations are processed securely. You'll receive a confirmation email with payment instructions.
+    </p>
+  </div>
+</div>
+
+<!-- Additional Materials Section -->
+<div class="form-section">
+  <div class="section-title">
+    <i class="fas fa-paperclip"></i>
+    <span>Supporting Materials</span>
+  </div>
+  
+  <div class="form-group">
+    <label><i class="fas fa-file-upload"></i> Upload Supporting Documents</label>
+    <div class="file-upload">
+      <input type="file" id="fileUpload" name="fileUpload" accept=".pdf,.doc,.docx,.jpg,.png,.ppt,.pptx" multiple>
+      <div class="file-upload-content">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p><strong>Click to upload files</strong></p>
+        <p style="font-size: 0.9rem; color: #666;">PDF, Word, Images, or PowerPoint (Max 10MB each)</p>
+      </div>
+    </div>
+    <div class="file-list" id="fileList"></div>
+  </div>
+  
+  <div class="form-group">
+    <label for="links"><i class="fas fa-link"></i> Relevant Links</label>
+    <textarea id="links" name="links" class="form-control" placeholder="Website, social media, portfolio, or reference links"></textarea>
+  </div>
+</div>
+
+<!-- Terms and Submission -->
+<div class="form-section">
+  <div class="section-title">
+    <i class="fas fa-file-contract"></i>
+    <span>Final Details</span>
+  </div>
+  
+  <div class="checkbox-group">
+    <input type="checkbox" id="newsletter" name="newsletter">
+    <label for="newsletter">Subscribe to our newsletter for updates on events and collaboration opportunities</label>
+  </div>
+  
+  <div class="checkbox-group">
+    <input type="checkbox" id="terms" name="terms" required>
+    <label for="terms">I agree to the <a href="terms.html">Terms & Conditions</a> and understand that submission doesn't guarantee collaboration *</label>
+  </div>
+  
+  <div class="checkbox-group">
+    <input type="checkbox" id="privacy" name="privacy" required>
+    <label for="privacy">I have read and agree to the <a href="privacy.html">Privacy Policy</a> regarding my personal information *</label>
+  </div>
+</div>
+
+<div class="submit-section">
+  <button type="submit" class="btn-submit">
+    <i class="fas fa-paper-plane"></i>
+    Submit Proposal
+  </button>
+  <p class="form-note">We'll respond within 2-3 business days. For urgent inquiries, call 065 916 8844</p>
+</div>
+</form>
+
+<div class="success-message" id="successMessage">
+  <i class="fas fa-check-circle"></i>
+  <h3>Proposal Submitted Successfully!</h3>
+  <p>Thank you for your collaboration proposal. Our team will review it and get back to you within 2-3 business days.</p>
+  <p>In the meantime, feel free to explore our <a href="events.html">upcoming events</a> or <a href="gallery.html">gallery</a>.</p>
+</div>
+</div>
+
+<footer>
+  © 2025 Haya Ngizwe Events · <br>
+  Creating Moments to Cherish Forever · <br>
+  Collaboration inquiries: hayangizwe@gmail.com
+</footer>
+  <script>
+    // Mobile Menu Toggle
+    const menu = document.querySelector('#mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+
+    // Page Load Welcome Animation
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create confetti effect on page load
+      createConfetti();
+      
+      // Play welcome sound (optional - commented out)
+      // const welcomeSound = new Audio('sounds/welcome.mp3');
+      // welcomeSound.volume = 0.3;
+      // welcomeSound.play();
+      
+      // Typewriter effect for welcome message
+      const welcomeText = document.querySelector('.welcome-text h1');
+      const originalText = welcomeText.textContent;
+      welcomeText.textContent = '';
+      
+      let i = 0;
+      function typeWriter() {
+        if (i < originalText.length) {
+          welcomeText.textContent += originalText.charAt(i);
+          i++;
+          setTimeout(typeWriter, 50);
+        }
+      }
+      
+      // Start typewriter effect after a brief delay
+      setTimeout(typeWriter, 500);
+    });
+
+    // Confetti Animation Function
+    function createConfetti() {
+      const celebration = document.getElementById('celebration');
+      celebration.style.display = 'block';
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        
+        // Random position
+        confetti.style.left = Math.random() * 100 + 'vw';
+        
+        // Random size
+        const size = Math.random() * 10 + 5;
+        confetti.style.width = size + 'px';
+        confetti.style.height = size * 2 + 'px';
+        
+        // Random color
+        const colors = ['#8e0000', '#d4a574', '#ffd700', '#ffffff'];
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        celebration.appendChild(confetti);
+        
+        // Animate confetti
+        const animation = confetti.animate([
+          { 
+            top: '0px', 
+            opacity: 0,
+            transform: 'rotate(0deg)'
+          },
+          { 
+            top: Math.random() * 100 + 'vh', 
+            opacity: 1,
+            transform: `rotate(${Math.random() * 360}deg)`
+          }
+        ], {
+          duration: Math.random() * 2000 + 1000,
+          easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+        });
+        
+        // Remove confetti after animation
+        animation.onfinish = () => {
+          confetti.remove();
+        };
+      }
+      
+      // Hide celebration container after animation
+      setTimeout(() => {
+        celebration.style.display = 'none';
+      }, 3000);
+    }
+
+    // File Upload Preview
+    const fileUpload = document.getElementById('fileUpload');
+    const fileList = document.getElementById('fileList');
+    
+    fileUpload.addEventListener('change', function(e) {
+      const files = e.target.files;
+      if (files.length > 0) {
+        fileList.style.display = 'block';
+        fileList.innerHTML = '<h4>Selected Files:</h4>';
+        
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const fileItem = document.createElement('div');
+          fileItem.className = 'file-item';
+          fileItem.innerHTML = `
+            <i class="fas fa-file"></i>
+            <span>${file.name}</span>
+            <small>(${(file.size / 1024 / 1024).toFixed(2)} MB)</small>
+          `;
+          fileList.appendChild(fileItem);
+        }
+      } else {
+        fileList.style.display = 'none';
+      }
+    });
+
+    // Donation Section Toggle
+    const includeDonation = document.getElementById('includeDonation');
+    const donationSection = document.getElementById('donationSection');
+    
+    includeDonation.addEventListener('change', function() {
+      if (this.checked) {
+        donationSection.classList.add('active');
+        createConfetti(); // Celebrate donation intent!
+      } else {
+        donationSection.classList.remove('active');
+      }
+    });
+
+    // Donation Amount Selection
+    const donationOptions = document.querySelectorAll('.donation-option');
+    const customAmountInput = document.getElementById('customAmount');
+    
+    donationOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        // Remove selected class from all options
+        donationOptions.forEach(opt => opt.classList.remove('selected'));
+        
+        // Add selected class to clicked option
+        this.classList.add('selected');
+        
+        // If it's a predefined amount, set the custom input to empty
+        const amount = this.getAttribute('data-amount');
+        if (amount) {
+          customAmountInput.value = '';
+        }
+      });
+    });
+
+    // Custom Amount Input
+    customAmountInput.addEventListener('focus', function() {
+      // Remove selected class from all options
+      donationOptions.forEach(opt => opt.classList.remove('selected'));
+    });
+
+    // Form Submission Handling
+    const form = document.getElementById('collaborationForm');
+    const successMessage = document.getElementById('successMessage');
+    
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Simple validation
+      const requiredFields = form.querySelectorAll('[required]');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          isValid = false;
+          field.style.borderColor = '#ff0000';
+          
+          // Add shake animation to invalid field
+          field.style.animation = 'none';
+          setTimeout(() => {
+            field.style.animation = 'shake 0.5s ease';
+          }, 10);
+        } else {
+          field.style.borderColor = '#e0e0e0';
+        }
+      });
+      
+      if (!isValid) {
+        // Play error sound
+        const errorSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-warning-alarm-buzzer-985.mp3');
+        errorSound.volume = 0.2;
+        errorSound.play();
+        
+        alert('Please fill in all required fields marked with *');
+        return;
+      }
+      
+      // Check if donation is included
+      let donationDetails = '';
+      if (includeDonation.checked) {
+        const selectedOption = document.querySelector('.donation-option.selected');
+        let amount = '';
+        
+        if (selectedOption && selectedOption.getAttribute('data-amount')) {
+          amount = 'R' + selectedOption.getAttribute('data-amount');
+        } else if (customAmountInput.value) {
+          amount = 'R' + customAmountInput.value;
+        }
+        
+        if (amount) {
+          donationDetails = `\n\nDonation Details:\nAmount: ${amount}`;
+          const purpose = document.getElementById('donationPurpose').value;
+          if (purpose) {
+            donationDetails += `\nPurpose: ${purpose}`;
+          }
+        }
+      }
+      
+      // Add donation details to description
+      const description = document.getElementById('description');
+      description.value += donationDetails;
+      
+      // Show loading animation
+      const submitBtn = form.querySelector('.btn-submit');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+      submitBtn.disabled = true;
+      
+      // Simulate processing delay
+      setTimeout(() => {
+        // In a real scenario, you would submit to Formspree here
+        // For demo, we'll just show success message
+        form.style.display = 'none';
+        successMessage.style.display = 'block';
+        
+        // Create celebration effect
+        createConfetti();
+        
+        // Play success sound
+        const successSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3');
+        successSound.volume = 0.3;
+        successSound.play();
+        
+        // Scroll to success message
+        successMessage.scrollIntoView({ behavior: 'smooth' });
+        
+        // You can uncomment the following to actually submit to Formspree:
+        // form.submit();
+      }, 2000);
+    });
+
+    // Add shake animation for validation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Dynamic Budget Display
+    const budgetSelect = document.getElementById('budget');
+    const budgetDisplay = document.createElement('div');
+    budgetDisplay.className = 'budget-value';
+    budgetSelect.parentNode.appendChild(budgetDisplay);
+    
+    budgetSelect.addEventListener('change', function() {
+      const budgetText = this.options[this.selectedIndex].text;
+      budgetDisplay.textContent = budgetText !== 'Select budget range' ? `Selected: ${budgetText}` : '';
+    });
+
+    // Add collaboration type to description placeholder
+    const collabType = document.getElementById('collabType');
+    const description = document.getElementById('description');
+    
+    collabType.addEventListener('change', function() {
+      const selectedOption = this.options[this.selectedIndex].text;
+      if (selectedOption !== 'Select collaboration type') {
+        description.placeholder = `Describe your ${selectedOption.toLowerCase()} in detail. Include goals, target audience, timeline, and why you think we'd be a good fit.`;
+      }
+    });
+
+    // Phone number formatting
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 0) {
+        if (!value.startsWith('27') && value.length <= 9) {
+          value = '27' + value;
+        }
+        
+        // Format: +27 12 345 6789
+        if (value.length <= 2) {
+          e.target.value = '+27';
+        } else if (value.length <= 4) {
+          e.target.value = '+27 ' + value.substring(2);
+        } else if (value.length <= 6) {
+          e.target.value = '+27 ' + value.substring(2, 4) + ' ' + value.substring(4);
+        } else if (value.length <= 9) {
+          e.target.value = '+27 ' + value.substring(2, 4) + ' ' + value.substring(4, 7) + ' ' + value.substring(7);
+        } else {
+          e.target.value = '+27 ' + value.substring(2, 4) + ' ' + value.substring(4, 7) + ' ' + value.substring(7, 11);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

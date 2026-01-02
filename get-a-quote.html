@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Get a Quote | Haya Ngizwe Events</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- jsPDF for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    /* Custom styles for quote page */
+    .quote-hero {
+      background: linear-gradient(rgba(142, 0, 0, 0.85), rgba(142, 0, 0, 0.9)), url('IMAGES/quote-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      min-height: 40vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .quote-hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    }
+    
+    .quote-hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin-bottom: 2rem;
+    }
+    
+    .quote-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    @media (min-width: 992px) {
+      .quote-container {
+        grid-template-columns: 1fr 400px;
+      }
+    }
+    
+    /* Service Categories */
+    .service-category {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      border-left: 5px solid #8e0000;
+    }
+    
+    .category-title {
+      color: #8e0000;
+      font-size: 1.5rem;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .category-title i {
+      font-size: 1.3rem;
+    }
+    
+    /* Service Items */
+    .service-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .service-item:hover {
+      border-color: #d4a574;
+      background-color: #fffcf8;
+    }
+    
+    .service-item.selected {
+      border-color: #8e0000;
+      background-color: #fff8f8;
+      box-shadow: 0 3px 10px rgba(142, 0, 0, 0.1);
+    }
+    
+    .service-checkbox {
+      width: 20px;
+      height: 20px;
+      accent-color: #8e0000;
+      cursor: pointer;
+    }
+    
+    .service-info h4 {
+      margin: 0 0 5px 0;
+      color: #333;
+      font-size: 1.1rem;
+    }
+    
+    .service-info p {
+      margin: 0;
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    
+    .service-price {
+      font-weight: bold;
+      color: #8e0000;
+      text-align: right;
+    }
+    
+    .price-amount {
+      font-size: 1.2rem;
+    }
+    
+    .price-unit {
+      font-size: 0.8rem;
+      color: #777;
+      display: block;
+    }
+    
+    /* Quantity Controls */
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    
+    .quantity-btn {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #8e0000;
+      transition: all 0.2s ease;
+    }
+    
+    .quantity-btn:hover {
+      background-color: #8e0000;
+      color: white;
+      border-color: #8e0000;
+    }
+    
+    .quantity-input {
+      width: 50px;
+      text-align: center;
+      padding: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    
+    /* Quote Summary Sidebar */
+    .quote-summary {
+      background: white;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+    }
+    
+    .summary-title {
+      color: #8e0000;
+      font-size: 1.5rem;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    .summary-items {
+      margin-bottom: 1.5rem;
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+    
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.8rem 0;
+      border-bottom: 1px dashed #eee;
+    }
+    
+    .summary-item-name {
+      color: #333;
+      font-size: 0.95rem;
+    }
+    
+    .summary-item-qty {
+      color: #777;
+      font-size: 0.85rem;
+      margin-left: 5px;
+    }
+    
+    .summary-item-price {
+      font-weight: bold;
+      color: #8e0000;
+    }
+    
+    .summary-total {
+      border-top: 2px solid #8e0000;
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    
+    .total-amount {
+      color: #8e0000;
+      font-size: 1.5rem;
+    }
+    
+    .discount-section {
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      display: none;
+    }
+    
+    .discount-section.active {
+      display: block;
+    }
+    
+    .discount-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+    }
+    
+    .form-actions {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .btn-print,
+    .btn-save,
+    .btn-email,
+    .btn-whatsapp {
+      padding: 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      border: none;
+      font-size: 1rem;
+    }
+    
+    .btn-print {
+      background-color: #f0f0f0;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+    
+    .btn-print:hover {
+      background-color: #e0e0e0;
+    }
+    
+    .btn-save {
+      background-color: #2e7d32;
+      color: white;
+    }
+    
+    .btn-save:hover {
+      background-color: #1b5e20;
+    }
+    
+    .btn-email {
+      background-color: #8e0000;
+      color: white;
+    }
+    
+    .btn-email:hover {
+      background-color: #6e0000;
+    }
+    
+    .btn-whatsapp {
+      background-color: #25D366;
+      color: white;
+    }
+    
+    .btn-whatsapp:hover {
+      background-color: #1DA851;
+    }
+    
+    /* Client Info Section */
+    .client-info {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+    
+    .client-form .form-group {
+      margin-bottom: 1rem;
+    }
+    
+    .client-form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #333;
+      font-weight: 600;
+    }
+    
+    .client-form input,
+    .client-form select,
+    .client-form textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    
+    /* Package Deals */
+    .package-deals {
+      background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(212, 165, 116, 0.05) 100%);
+      border: 2px solid #d4a574;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .package-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .package-option {
+      background: white;
+      padding: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .package-option:hover {
+      border-color: #d4a574;
+    }
+    
+    .package-option.selected {
+      border-color: #8e0000;
+      background-color: #fff8f8;
+    }
+    
+    .package-name {
+      font-weight: bold;
+      color: #8e0000;
+      margin-bottom: 0.5rem;
+    }
+    
+    .package-price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    
+    .package-discount {
+      background-color: #8e0000;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+    
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #777;
+    }
+    
+    .empty-state i {
+      font-size: 3rem;
+      color: #ddd;
+      margin-bottom: 1rem;
+    }
+    
+    /* Print Styles */
+    @media print {
+      header, footer, .quote-hero, .form-actions, .package-deals {
+        display: none !important;
+      }
+      
+      .quote-container {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      
+      .service-category, .quote-summary {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+      
+      .summary-items {
+        max-height: none !important;
+      }
+    }
+    
+    /* Loading Overlay */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      color: white;
+      display: none;
+    }
+    
+    .loading-spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #8e0000;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .quote-hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .service-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      
+      .service-price {
+        text-align: left;
+      }
+      
+      .package-options {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body style="background-color: #F9F9F9;">
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+      <a href="collaborate-with-us.html">Collaborate</a>
+      <a href="get-quote.html" class="active">Get Quote</a>
+    </nav>
+  </header>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <p>Generating PDF...</p>
+  </div>
+
+  <section class="quote-hero">
+    <h1>Get a Quote</h1>
+    <p>Select the services you need and get an instant price estimate. Customize quantities and see your total update in real-time.</p>
+    <p><strong>New customer discount: 10% off your first order!</strong></p>
+  </section>
+
+  <div class="quote-container">
+    <!-- Left Column: Services Selection -->
+    <div class="services-selection">
+      
+      <!-- Client Information -->
+      <div class="client-info">
+        <h3 class="category-title"><i class="fas fa-user"></i> Your Information</h3>
+        <form class="client-form">
+          <div class="form-group">
+            <label for="clientName">Full Name *</label>
+            <input type="text" id="clientName" placeholder="Enter your full name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="clientEmail">Email Address *</label>
+            <input type="email" id="clientEmail" placeholder="your.email@example.com" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="clientPhone">Phone Number *</label>
+            <input type="tel" id="clientPhone" placeholder="071 908 0873" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="clientCompany">Company/Organization</label>
+            <input type="text" id="clientCompany" placeholder="Your company name">
+          </div>
+          
+          <div class="form-group">
+            <label for="eventDate">Event Date (if applicable)</label>
+            <input type="date" id="eventDate">
+          </div>
+        </form>
+      </div>
+      
+      <!-- Package Deals -->
+      <div class="package-deals">
+        <h3 class="category-title"><i class="fas fa-star"></i> Recommended Packages</h3>
+        <p>Save up to 15% with our pre-built packages</p>
+        <div class="package-options">
+          <div class="package-option" data-package="starter">
+            <div class="package-name">Small Business Starter</div>
+            <div class="package-price">R4,500</div>
+            <div class="package-discount">Save R500</div>
+            <small>5-page website + logo + business cards</small>
+          </div>
+          
+          <div class="package-option" data-package="event">
+            <div class="package-name">Event Creator</div>
+            <div class="package-price">R6,500</div>
+            <div class="package-discount">Save R800</div>
+            <small>Event planning + design + sound system</small>
+          </div>
+          
+          <div class="package-option" data-package="complete">
+            <div class="package-name">Complete Online Presence</div>
+            <div class="package-price">R8,000</div>
+            <div class="package-discount">Save R1,000</div>
+            <small>Website + branding + social media</small>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Event Management Services -->
+      <div class="service-category">
+        <h3 class="category-title"><i class="fas fa-calendar-alt"></i> Event Management</h3>
+        
+        <div class="service-item" data-service="poetry-slam" data-price="2500">
+          <input type="checkbox" class="service-checkbox" id="poetry-slam">
+          <div class="service-info">
+            <h4>Poetry Slam Planning</h4>
+            <p>Full planning and coordination for poetry slam events</p>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R2,500</span>
+            <span class="price-unit">per event</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="cultural-festival" data-price="5000">
+          <input type="checkbox" class="service-checkbox" id="cultural-festival">
+          <div class="service-info">
+            <h4>Cultural Festival Planning</h4>
+            <p>Large-scale cultural festival organization</p>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R5,000</span>
+            <span class="price-unit">per event</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="event-coordination" data-price="1500">
+          <input type="checkbox" class="service-checkbox" id="event-coordination">
+          <div class="service-info">
+            <h4>Basic Event Coordination</h4>
+            <p>On-site event management and coordination</p>
+            <div class="quantity-controls">
+              <button class="quantity-btn minus">-</button>
+              <input type="number" class="quantity-input" value="1" min="1" data-unit="day">
+              <button class="quantity-btn plus">+</button>
+              <span style="margin-left: 10px; color: #666; font-size: 0.9rem;">days</span>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R1,500</span>
+            <span class="price-unit">per day</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="full-event" data-price="8000">
+          <input type="checkbox" class="service-checkbox" id="full-event">
+          <div class="service-info">
+            <h4>Full Event Package</h4>
+            <p>Complete event planning from start to finish</p>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R8,000</span>
+            <span class="price-unit">per event</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Web Development Services -->
+            <!-- Web Development Services -->
+      <div class="service-category">
+        <h3 class="category-title"><i class="fas fa-laptop-code"></i> Web Development</h3>
+        
+        <div class="service-item" data-service="landing-page" data-price="1500">
+          <input type="checkbox" class="service-checkbox" id="landing-page">
+          <div class="service-info">
+            <h4>Single Landing Page</h4>
+            <p>One-page website with contact form</p>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R1,500</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="business-website" data-price="3500">
+          <input type="checkbox" class="service-checkbox" id="business-website">
+          <div class="service-info">
+            <h4>Business Website (5 pages)</h4>
+            <p>Responsive website with 5 pages</p>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R3,500</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="ecommerce" data-price="8000">
+          <input type="checkbox" class="service-checkbox" id="ecommerce">
+          <div class="service-info">
+            <h4>E-commerce Store</h4>
+            <p>Online store with product catalog</p>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R8,000</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="website-maintenance" data-price="300">
+          <input type="checkbox" class="service-checkbox" id="website-maintenance">
+          <div class="service-info">
+            <h4>Website Maintenance</h4>
+            <p>Monthly updates, backups, and support</p>
+            <div class="quantity-controls">
+              <button class="quantity-btn minus">-</button>
+              <input type="number" class="quantity-input" value="1" min="1" data-unit="month">
+              <button class="quantity-btn plus">+</button>
+              <span style="margin-left: 10px; color: #666; font-size: 0.9rem;">months</span>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R300</span>
+            <span class="price-unit">per month</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="contact-forms" data-price="500">
+          <input type="checkbox" class="service-checkbox" id="contact-forms">
+          <div class="service-info">
+            <h4>Custom Contact Forms</h4>
+            <p>Custom-designed contact forms</p>
+            <div class="quantity-controls">
+              <button class="quantity-btn minus">-</button>
+              <input type="number" class="quantity-input" value="1" min="1">
+              <button class="quantity-btn plus">+</button>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R500</span>
+            <span class="price-unit">each</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Graphic Design Services -->
+      <div class="service-category">
+        <h3 class="category-title"><i class="fas fa-paint-brush"></i> Graphic Design</h3>
+        
+        <div class="service-item" data-service="event-poster" data-price="300">
+          <input type="checkbox" class="service-checkbox" id="event-poster">
+          <div class="service-info">
+            <h4>Event Poster/Flyer</h4>
+            <p>Custom-designed event poster or flyer</p>
+            <div class="quantity-controls">
+              <button class="quantity-btn minus">-</button>
+              <input type="number" class="quantity-input" value="1" min="1">
+              <button class="quantity-btn plus">+</button>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R300</span>
+            <span class="price-unit">each</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="logo-design" data-price="800">
+          <input type="checkbox" class="service-checkbox" id="logo-design">
+          <div class="service-info">
+            <h4>Logo Design</h4>
+            <p>Custom logo with 3 concepts included</p>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R800</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="social-media-kit" data-price="1000">
+          <input type="checkbox" class="service-checkbox" id="social-media-kit">
+          <div class="service-info">
+            <h4>Social Media Kit (5 posts)</h4>
+            <p>Cohesive social media designs</p>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R1,000</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="business-card" data-price="400">
+          <input type="checkbox" class="service-checkbox" id="business-card">
+          <div class="service-info">
+            <h4>Business Card Design</h4>
+            <p>Professional business card design</p>
+            <div class="quantity-controls">
+              <button class="quantity-btn minus">-</button>
+              <input type="number" class="quantity-input" value="1" min="1">
+              <button class="quantity-btn plus">+</button>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R400</span>
+            <span class="price-unit">each</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="brand-identity" data-price="2500">
+          <input type="checkbox" class="service-checkbox" id="brand-identity">
+          <div class="service-info">
+            <h4>Full Brand Identity</h4>
+            <p>Complete branding package</p>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R2,500</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sound Hiring Services -->
+      <div class="service-category">
+        <h3 class="category-title"><i class="fas fa-volume-up"></i> Sound Hiring</h3>
+        
+        <div class="service-item" data-service="basic-sound" data-price="800">
+          <input type="checkbox" class="service-checkbox" id="basic-sound">
+          <div class="service-info">
+            <h4>Basic Sound System</h4>
+            <p>PA system, 2 mics for small events</p>
+            <div class="quantity-controls">
+              <button class="quantity-btn minus">-</button>
+              <input type="number" class="quantity-input" value="1" min="1" data-unit="day">
+              <button class="quantity-btn plus">+</button>
+              <span style="margin-left: 10px; color: #666; font-size: 0.9rem;">days</span>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R800</span>
+            <span class="price-unit">per day</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="standard-sound" data-price="1500">
+          <input type="checkbox" class="service-checkbox" id="standard-sound">
+          <div class="service-info">
+            <h4>Standard Package</h4>
+            <p>Mixer, speakers, 4 mics for medium events</p>
+            <div class="quantity-controls">
+              <button class="quantity-btn minus">-</button>
+              <input type="number" class="quantity-input" value="1" min="1" data-unit="day">
+              <button class="quantity-btn plus">+</button>
+              <span style="margin-left: 10px; color: #666; font-size: 0.9rem;">days</span>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R1,500</span>
+            <span class="price-unit">per day</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="professional-sound" data-price="3000">
+          <input type="checkbox" class="service-checkbox" id="professional-sound">
+          <div class="service-info">
+            <h4>Professional Package</h4>
+            <p>Full sound setup for large events</p>
+            <div class="quantity-controls">
+              <button class="quantity-btn minus">-</button>
+              <input type="number" class="quantity-input" value="1" min="1" data-unit="day">
+              <button class="quantity-btn plus">+</button>
+              <span style="margin-left: 10px; color: #666; font-size: 0.9rem;">days</span>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R3,000</span>
+            <span class="price-unit">per day</span>
+          </div>
+        </div>
+        
+        <div class="service-item" data-service="technician" data-price="500">
+          <input type="checkbox" class="service-checkbox" id="technician">
+          <div class="service-info">
+            <h4>Technician Fee</h4>
+            <p>Sound technician for event</p>
+            <div class="quantity-controls">
+              <button class="quantity-btn minus">-</button>
+              <input type="number" class="quantity-input" value="1" min="1" data-unit="day">
+              <button class="quantity-btn plus">+</button>
+              <span style="margin-left: 10px; color: #666; font-size: 0.9rem;">days</span>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price-amount">R500</span>
+            <span class="price-unit">per day</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Quote Summary -->
+    <div class="quote-summary">
+      <h3 class="summary-title">Your Quote Summary</h3>
+      
+      <div class="summary-items" id="summaryItems">
+        <div class="empty-state" id="emptyState">
+          <i class="fas fa-shopping-cart"></i>
+          <p>No services selected yet</p>
+          <p>Select services from the left to see your quote</p>
+        </div>
+        <!-- Items will be added here dynamically -->
+      </div>
+      
+      <div class="summary-total">
+        <div class="total-row">
+          <span>Subtotal:</span>
+          <span id="subtotalAmount">R0</span>
+        </div>
+        
+        <div class="discount-section" id="discountSection">
+          <div class="total-row">
+            <span>Discount (10%):</span>
+            <span id="discountAmount">-R0</span>
+          </div>
+        </div>
+        
+        <div class="total-row">
+          <span><strong>Total:</strong></span>
+          <span class="total-amount" id="totalAmount">R0</span>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button class="btn-print" id="printQuote">
+          <i class="fas fa-print"></i> Print Quote
+        </button>
+        
+        <button class="btn-save" id="saveQuote">
+          <i class="fas fa-download"></i> Save PDF
+        </button>
+        
+        <button class="btn-email" id="emailQuote">
+          <i class="fas fa-envelope"></i> Email Quote
+        </button>
+        
+        <button class="btn-whatsapp" id="whatsappQuote">
+          <i class="fab fa-whatsapp"></i> WhatsApp Quote
+        </button>
+      </div>
+      
+      <div style="margin-top: 2rem; font-size: 0.9rem; color: #666; text-align: center;">
+        <p><strong>Quote valid for 30 days</strong></p>
+        <p>Prices include VAT where applicable</p>
+        <p>Contact: 071 908 0873 | hngizwe@gmail.com</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Haya Ngizwe Events · <br>
+    Creating Moments to Cherish Forever · <br>
+    Get a quote: hngizwe@gmail.com | WhatsApp: 071 908 0873
+  </footer>
+  <script>
+  // Mobile Menu Toggle
+  const menu = document.querySelector('#mobile-menu');
+  const navMenu = document.querySelector('.nav-menu');
+  if (menu) {
+    menu.addEventListener('click', () => navMenu.classList.toggle('active'));
+  }
+
+  // Quote Calculator
+  document.addEventListener('DOMContentLoaded', function() {
+    // Store all services with their data
+    const services = {};
+    const selectedServices = {};
+    let subtotal = 0;
+    let discount = 0;
+    let total = 0;
+    let isFirstTimeCustomer = true;
+    
+    // Get loading overlay
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    
+    // Show loading function
+    function showLoading(message = "Generating PDF...") {
+      loadingOverlay.querySelector('p').textContent = message;
+      loadingOverlay.style.display = 'flex';
+    }
+    
+    // Hide loading function
+    function hideLoading() {
+      loadingOverlay.style.display = 'none';
+    }
+    
+    // Initialize all services
+    document.querySelectorAll('.service-item').forEach(item => {
+      const checkbox = item.querySelector('.service-checkbox');
+      const serviceId = item.dataset.service;
+      const basePrice = parseFloat(item.dataset.price);
+      const quantityInput = item.querySelector('.quantity-input');
+      const minusBtn = item.querySelector('.quantity-btn.minus');
+      const plusBtn = item.querySelector('.quantity-btn.plus');
+      
+      services[serviceId] = {
+        element: item,
+        checkbox: checkbox,
+        basePrice: basePrice,
+        quantityInput: quantityInput,
+        name: item.querySelector('h4').textContent,
+        unit: item.querySelector('.price-unit')?.textContent || 'once'
+      };
+      
+      // Add click handler to select service
+      item.addEventListener('click', function(e) {
+        if (e.target !== checkbox && e.target !== quantityInput && 
+            e.target !== minusBtn && e.target !== plusBtn) {
+          checkbox.checked = !checkbox.checked;
+          checkbox.dispatchEvent(new Event('change'));
+        }
+      });
+      
+      // Handle checkbox change
+      checkbox.addEventListener('change', function() {
+        if (this.checked) {
+          item.classList.add('selected');
+          addServiceToQuote(serviceId);
+        } else {
+          item.classList.remove('selected');
+          removeServiceFromQuote(serviceId);
+        }
+        updateQuoteSummary();
+      });
+      
+      // Handle quantity changes
+      if (quantityInput) {
+        minusBtn.addEventListener('click', function() {
+          let currentVal = parseInt(quantityInput.value);
+          if (currentVal > 1) {
+            quantityInput.value = currentVal - 1;
+            quantityInput.dispatchEvent(new Event('input'));
+          }
+        });
+        
+        plusBtn.addEventListener('click', function() {
+          let currentVal = parseInt(quantityInput.value);
+          quantityInput.value = currentVal + 1;
+          quantityInput.dispatchEvent(new Event('input'));
+        });
+        
+        quantityInput.addEventListener('input', function() {
+          if (checkbox.checked) {
+            updateServiceQuantity(serviceId, parseInt(this.value));
+            updateQuoteSummary();
+          }
+        });
+      }
+    });
+    
+    // Package selection
+    document.querySelectorAll('.package-option').forEach(pkg => {
+      pkg.addEventListener('click', function() {
+        // Remove selection from other packages
+        document.querySelectorAll('.package-option').forEach(p => {
+          p.classList.remove('selected');
+        });
+        
+        // Select this package
+        this.classList.add('selected');
+        
+        // Clear all current selections
+        document.querySelectorAll('.service-checkbox').forEach(cb => {
+          cb.checked = false;
+          cb.dispatchEvent(new Event('change'));
+        });
+        
+        // Add package services
+        const packageType = this.dataset.package;
+        addPackageServices(packageType);
+      });
+    });
+    
+    function addPackageServices(packageType) {
+      // Clear current selections
+      for (const serviceId in selectedServices) {
+        delete selectedServices[serviceId];
+      }
+      
+      // Add services based on package
+      switch(packageType) {
+        case 'starter':
+          selectService('business-website', 1);
+          selectService('logo-design', 1);
+          selectService('business-card', 1);
+          break;
+        case 'event':
+          selectService('poetry-slam', 1);
+          selectService('event-poster', 2);
+          selectService('standard-sound', 1);
+          break;
+        case 'complete':
+          selectService('business-website', 1);
+          selectService('brand-identity', 1);
+          selectService('social-media-kit', 1);
+          break;
+      }
+      
+      updateQuoteSummary();
+    }
+    
+    function selectService(serviceId, quantity = 1) {
+      const service = services[serviceId];
+      if (service) {
+        service.checkbox.checked = true;
+        service.element.classList.add('selected');
+        
+        if (service.quantityInput) {
+          service.quantityInput.value = quantity;
+        }
+        
+        addServiceToQuote(serviceId);
+      }
+    }
+    
+    function addServiceToQuote(serviceId) {
+      const service = services[serviceId];
+      if (!service) return;
+      
+      const quantity = service.quantityInput ? parseInt(service.quantityInput.value) : 1;
+      const price = service.basePrice * quantity;
+      
+      selectedServices[serviceId] = {
+        name: service.name,
+        quantity: quantity,
+        unit: service.unit,
+        price: price,
+        basePrice: service.basePrice
+      };
+    }
+    
+    function removeServiceFromQuote(serviceId) {
+      delete selectedServices[serviceId];
+    }
+    
+    function updateServiceQuantity(serviceId, quantity) {
+      if (selectedServices[serviceId]) {
+        selectedServices[serviceId].quantity = quantity;
+        selectedServices[serviceId].price = selectedServices[serviceId].basePrice * quantity;
+      }
+    }
+    
+    function updateQuoteSummary() {
+      // Calculate subtotal
+      subtotal = 0;
+      for (const serviceId in selectedServices) {
+        subtotal += selectedServices[serviceId].price;
+      }
+      
+      // Apply discount for first-time customers
+      discount = isFirstTimeCustomer ? subtotal * 0.10 : 0;
+      total = subtotal - discount;
+      
+      // Update display
+      document.getElementById('subtotalAmount').textContent = formatCurrency(subtotal);
+      document.getElementById('discountAmount').textContent = formatCurrency(discount * -1);
+      document.getElementById('totalAmount').textContent = formatCurrency(total);
+      
+      // Show/hide discount section
+      const discountSection = document.getElementById('discountSection');
+      if (discount > 0) {
+        discountSection.classList.add('active');
+      } else {
+        discountSection.classList.remove('active');
+      }
+      
+      // Update items list
+      const summaryItems = document.getElementById('summaryItems');
+      const emptyState = document.getElementById('emptyState');
+      
+      if (Object.keys(selectedServices).length === 0) {
+        emptyState.style.display = 'block';
+        summaryItems.innerHTML = '';
+        summaryItems.appendChild(emptyState);
+      } else {
+        emptyState.style.display = 'none';
+        let itemsHTML = '';
+        
+        for (const serviceId in selectedServices) {
+          const service = selectedServices[serviceId];
+          itemsHTML += `
+            <div class="summary-item">
+              <div class="summary-item-name">
+                ${service.name}
+                <span class="summary-item-qty">${service.quantity > 1 ? `×${service.quantity}` : ''}</span>
+              </div>
+              <div class="summary-item-price">${formatCurrency(service.price)}</div>
+            </div>
+          `;
+        }
+        
+        summaryItems.innerHTML = itemsHTML;
+      }
+    }
+    
+    function formatCurrency(amount) {
+      return 'R' + amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    
+    // Generate PDF function
+    async function generatePDF() {
+      if (Object.keys(selectedServices).length === 0) {
+        alert('Please select at least one service to generate a quote.');
+        return null;
+      }
+      
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF('p', 'mm', 'a4');
+      
+      // Get client info
+      const clientName = document.getElementById('clientName').value || 'Customer';
+      const clientEmail = document.getElementById('clientEmail').value || 'Not provided';
+      const clientPhone = document.getElementById('clientPhone').value || 'Not provided';
+      const clientCompany = document.getElementById('clientCompany').value || 'Not provided';
+      const eventDate = document.getElementById('eventDate').value || 'Not specified';
+      
+      // Quote details
+      const quoteNumber = `HN-${Date.now().toString().slice(-6)}`;
+      const quoteDate = new Date().toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      
+      const validUntilDate = new Date();
+      validUntilDate.setDate(validUntilDate.getDate() + 30);
+      const quoteValidUntil = validUntilDate.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      
+      // Add header
+      doc.setFillColor(142, 0, 0);
+      doc.rect(0, 0, 210, 40, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(24);
+      doc.setFont('helvetica', 'bold');
+      doc.text('HAYA NGIZWE EVENTS', 105, 15, { align: 'center' });
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Creating Moments to Cherish Forever', 105, 25, { align: 'center' });
+      doc.text('QUOTATION', 105, 35, { align: 'center' });
+      
+      // Reset text color
+      doc.setTextColor(0, 0, 0);
+      
+      // Add quote info
+      let yPosition = 50;
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Quote Number: ${quoteNumber}`, 20, yPosition);
+      doc.text(`Date: ${quoteDate}`, 105, yPosition);
+      doc.text(`Valid Until: ${quoteValidUntil}`, 150, yPosition);
+      
+      yPosition += 10;
+      doc.line(20, yPosition, 190, yPosition);
+      
+      // Add client info
+      yPosition += 15;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.text('CLIENT INFORMATION', 20, yPosition);
+      yPosition += 8;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      doc.text(`Name: ${clientName}`, 20, yPosition);
+      doc.text(`Email: ${clientEmail}`, 105, yPosition);
+      yPosition += 7;
+      doc.text(`Phone: ${clientPhone}`, 20, yPosition);
+      doc.text(`Company: ${clientCompany}`, 105, yPosition);
+      yPosition += 7;
+      doc.text(`Event Date: ${eventDate}`, 20, yPosition);
+      
+      // Add services table header
+      yPosition += 15;
+      doc.setFillColor(240, 240, 240);
+      doc.rect(20, yPosition - 5, 170, 10, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.text('Service Description', 25, yPosition);
+      doc.text('Qty', 125, yPosition);
+      doc.text('Unit Price', 145, yPosition);
+      doc.text('Total', 175, yPosition);
+      
+      // Add services
+      yPosition += 10;
+      doc.setFont('helvetica', 'normal');
+      
+      let serviceCount = 0;
+      for (const serviceId in selectedServices) {
+        const service = selectedServices[serviceId];
+        
+        // Check for page break
+        if (yPosition > 250) {
+          doc.addPage();
+          yPosition = 20;
+        }
+        
+        // Split long service names
+        const serviceName = service.name;
+        const maxWidth = 80;
+        const lines = doc.splitTextToSize(serviceName, maxWidth);
+        
+        // Draw service name (may be multiple lines)
+        for (let i = 0; i < lines.length; i++) {
+          doc.text(lines[i], 25, yPosition);
+          yPosition += 5;
+        }
+        
+        // Reset yPosition for quantities and prices
+        yPosition -= (lines.length * 5);
+        doc.text(service.quantity.toString(), 125, yPosition);
+        doc.text(formatCurrency(service.basePrice), 145, yPosition);
+        doc.text(formatCurrency(service.price), 175, yPosition);
+        
+        yPosition += 7;
+        serviceCount++;
+        
+        // Add unit info if needed
+        if (service.unit && service.unit !== 'once') {
+          doc.setFontSize(9);
+          doc.text(`(${service.unit})`, 25, yPosition);
+          doc.setFontSize(11);
+          yPosition += 5;
+        }
+        
+        yPosition += 2; // Spacing between items
+      }
+      
+      // Add totals
+      yPosition += 10;
+      doc.line(120, yPosition, 190, yPosition);
+      yPosition += 10;
+      
+      doc.setFont('helvetica', 'bold');
+      doc.text('Subtotal:', 140, yPosition);
+      doc.text(formatCurrency(subtotal), 175, yPosition, { align: 'right' });
+      
+      if (discount > 0) {
+        yPosition += 7;
+        doc.text('Discount (10%):', 140, yPosition);
+        doc.text(`-${formatCurrency(discount)}`, 175, yPosition, { align: 'right' });
+      }
+      
+      yPosition += 10;
+      doc.setFontSize(13);
+      doc.text('TOTAL:', 140, yPosition);
+      doc.text(formatCurrency(total), 175, yPosition, { align: 'right' });
+      
+      // Add footer
+      yPosition += 20;
+      doc.setFontSize(9);
+      doc.setTextColor(100, 100, 100);
+      doc.text('This quote is valid for 30 days from the date above.', 105, yPosition, { align: 'center' });
+      doc.text('Payment terms: 50% deposit to commence work, balance on completion.', 105, yPosition + 5, { align: 'center' });
+      doc.text('Haya Ngizwe Events | Email: hngizwe@gmail.com | WhatsApp: 071 908 0873', 105, yPosition + 10, { align: 'center' });
+      doc.text('Creating Moments to Cherish Forever', 105, yPosition + 15, { align: 'center' });
+      
+      // Generate PDF blob
+      const pdfBlob = doc.output('blob');
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      
+      return {
+        doc: doc,
+        blob: pdfBlob,
+        url: pdfUrl,
+        quoteNumber: quoteNumber,
+        clientName: clientName,
+        clientEmail: clientEmail,
+        clientPhone: clientPhone,
+        clientCompany: clientCompany,
+        eventDate: eventDate,
+        total: total,
+        subtotal: subtotal,
+        discount: discount
+      };
+    }
+    
+    // Save PDF function
+    async function savePDF() {
+      showLoading('Saving PDF...');
+      try {
+        const pdfData = await generatePDF();
+        if (!pdfData) {
+          hideLoading();
+          return;
+        }
+        
+        // Save the PDF
+        pdfData.doc.save(`Haya_Ngizwe_Quote_${pdfData.quoteNumber}.pdf`);
+        
+        hideLoading();
+        alert(`Quote saved as PDF! File: Haya_Ngizwe_Quote_${pdfData.quoteNumber}.pdf`);
+      } catch (error) {
+        hideLoading();
+        console.error('Error generating PDF:', error);
+        alert('Error generating PDF. Please try again.');
+      }
+    }
+    
+    // Print PDF function
+    async function printPDF() {
+      showLoading('Preparing PDF for printing...');
+      try {
+        const pdfData = await generatePDF();
+        if (!pdfData) {
+          hideLoading();
+          return;
+        }
+        
+        // Open PDF in new window for printing
+        const printWindow = window.open(pdfData.url);
+        
+        // Wait for the PDF to load then trigger print
+        setTimeout(() => {
+          if (printWindow) {
+            printWindow.focus();
+            printWindow.print();
+          }
+          hideLoading();
+        }, 1000);
+      } catch (error) {
+        hideLoading();
+        console.error('Error printing PDF:', error);
+        alert('Error printing PDF. Please try again.');
+      }
+    }
+    
+    // Email Quote function (opens email client with pre-filled message)
+    async function emailQuote() {
+      const clientName = document.getElementById('clientName').value;
+      const clientEmail = document.getElementById('clientEmail').value;
+      const clientPhone = document.getElementById('clientPhone').value;
+      
+      if (!clientName || !clientEmail) {
+        alert('Please enter your name and email address to send the quote.');
+        document.getElementById('clientName').focus();
+        return;
+      }
+      
+      if (Object.keys(selectedServices).length === 0) {
+        alert('Please select at least one service to generate a quote.');
+        return;
+      }
+      
+      showLoading('Preparing email...');
+      try {
+        const pdfData = await generatePDF();
+        if (!pdfData) {
+          hideLoading();
+          return;
+        }
+        
+        // First save the PDF for the client to attach
+        pdfData.doc.save(`Haya_Ngizwe_Quote_${pdfData.quoteNumber}.pdf`);
+        
+        // Create email subject and body
+        const subject = `Quote Request - ${pdfData.quoteNumber} - ${clientName}`;
+        
+        const body = `
+Dear Haya Ngizwe Events Team,
+
+I would like to request a quote for the following services:
+
+CLIENT INFORMATION:
+Name: ${clientName}
+Email: ${clientEmail}
+Phone: ${clientPhone}
+Company: ${pdfData.clientCompany}
+Event Date: ${pdfData.eventDate}
+
+QUOTE DETAILS:
+Quote Number: ${pdfData.quoteNumber}
+Quote Date: ${pdfData.quoteDate}
+Valid Until: ${pdfData.quoteValidUntil}
+
+SERVICES REQUESTED:
+${Object.entries(selectedServices).map(([id, service], index) => 
+  `${index + 1}. ${service.name} (Quantity: ${service.quantity} ${service.unit}) - ${formatCurrency(service.price)}`
+).join('\n')}
+
+PRICE SUMMARY:
+Subtotal: ${formatCurrency(pdfData.subtotal)}
+${pdfData.discount > 0 ? `Discount (10%): -${formatCurrency(pdfData.discount)}\n` : ''}Total: ${formatCurrency(pdfData.total)}
+
+I have attached the detailed quote PDF for your review.
+
+Please send me the formal quote and let me know the next steps to proceed.
+
+Thank you,
+${clientName}
+${pdfData.clientCompany ? `Company: ${pdfData.clientCompany}` : ''}
+        `.trim();
+        
+        // Encode the subject and body for the mailto link
+        const mailtoLink = `mailto:hngizwe@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        
+        hideLoading();
+        
+        // Open the default email client
+        window.location.href = mailtoLink;
+        
+        // Show confirmation message
+        alert('Your email client is opening with a pre-filled quote request. Please attach the downloaded PDF file and click "Send" to submit your quote request to Haya Ngizwe Events!');
+      } catch (error) {
+        hideLoading();
+        console.error('Error preparing email:', error);
+        alert('Error preparing email. Please try again.');
+      }
+    }
+        // WhatsApp Quote function
+    async function whatsappQuote() {
+      const clientName = document.getElementById('clientName').value;
+      const clientPhone = document.getElementById('clientPhone').value;
+      const clientCompany = document.getElementById('clientCompany').value;
+      
+      if (!clientName) {
+        alert('Please enter your name to send a WhatsApp message.');
+        document.getElementById('clientName').focus();
+        return;
+      }
+      
+      if (Object.keys(selectedServices).length === 0) {
+        alert('Please select at least one service to generate a quote.');
+        return;
+      }
+      
+      showLoading('Preparing WhatsApp message...');
+      try {
+        const pdfData = await generatePDF();
+        if (!pdfData) {
+          hideLoading();
+          return;
+        }
+        
+        // Create WhatsApp message
+        const message = `Hello Haya Ngizwe Events! 
+
+I'm ${clientName}${clientCompany ? ` from ${clientCompany}` : ''}. 
+
+I would like to inquire about a quote for the following services:
+
+${Object.entries(selectedServices).map(([id, service], index) => 
+  `• ${service.name} (${service.quantity} ${service.unit})`
+).join('\n')}
+
+Total quote amount: ${formatCurrency(pdfData.total)}
+
+Quote Number: ${pdfData.quoteNumber}
+
+Please let me know how we can proceed. You can reach me at:
+Phone: ${clientPhone || 'Not provided'}
+Email: ${pdfData.clientEmail}
+
+Thank you!`;
+        
+        // Encode the message for WhatsApp URL
+        const encodedMessage = encodeURIComponent(message);
+        
+        // WhatsApp number: 0719080873 (South Africa: +27719080873)
+        const whatsappNumber = '27719080873'; // Country code + number without leading 0
+        
+        // Create WhatsApp URL
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+        
+        hideLoading();
+        
+        // Open WhatsApp in new tab
+        window.open(whatsappUrl, '_blank');
+        
+        // Also save the PDF for reference
+        pdfData.doc.save(`Haya_Ngizwe_Quote_${pdfData.quoteNumber}_For_WhatsApp.pdf`);
+        
+        alert('Opening WhatsApp with your quote details. You can also refer to the downloaded PDF file.');
+      } catch (error) {
+        hideLoading();
+        console.error('Error preparing WhatsApp message:', error);
+        alert('Error preparing WhatsApp message. Please try again.');
+      }
+    }
+    
+    // Add event listeners for buttons
+    document.getElementById('saveQuote').addEventListener('click', savePDF);
+    document.getElementById('printQuote').addEventListener('click', printPDF);
+    document.getElementById('emailQuote').addEventListener('click', emailQuote);
+    document.getElementById('whatsappQuote').addEventListener('click', whatsappQuote);
+    
+    // Initialize empty state
+    updateQuoteSummary();
+  });
+</script>
+</body>
+</html>
+    
