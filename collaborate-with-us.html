@@ -67,19 +67,6 @@ body {
     padding: 0 20px !important;
 }
 
-/* Fix header and footer to prevent overflow */
-header {
-    max-width: 100% !important;
-    overflow: hidden !important;
-}
-
-footer {
-    max-width: 100% !important;
-    text-align: center !important;
-    padding: 20px !important;
-    box-sizing: border-box !important;
-}
-
 /* Prevent any element from causing horizontal scroll */
 * {
     max-width: 100% !important;
@@ -522,7 +509,7 @@ footer {
       display: none;
     }
     
-    /* Donation Section Styles */
+    /* Donation Section Styles - UPDATED */
     .donation-section {
       background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(212, 165, 116, 0.05) 100%);
       border: 2px solid #d4a574;
@@ -539,7 +526,7 @@ footer {
     
     .donation-options {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 1rem;
       margin: 1rem 0;
     }
@@ -586,6 +573,67 @@ footer {
       border: 2px solid #d4a574;
       border-radius: 8px;
       background: white;
+    }
+    
+    /* Bank Details Styles - ADDED */
+    .bank-details {
+      background: linear-gradient(135deg, rgba(142, 0, 0, 0.05) 0%, rgba(142, 0, 0, 0.02) 100%);
+      border: 2px solid #8e0000;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+    
+    .bank-details h4 {
+      color: #8e0000;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+    
+    .bank-details-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      text-align: left;
+    }
+    
+    .bank-item {
+      padding: 0.5rem;
+    }
+    
+    .bank-item strong {
+      color: #8e0000;
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+    
+    .bank-item span {
+      color: #333;
+      font-weight: 600;
+      font-size: 1rem;
+      word-break: break-all;
+    }
+    
+    .copy-btn {
+      background: #8e0000;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    
+    .copy-btn:hover {
+      background: #a10000;
+    }
+    
+    .copy-btn.copied {
+      background: #25d366;
     }
     
     .checkbox-group {
@@ -712,6 +760,10 @@ footer {
       .donation-options {
         grid-template-columns: 1fr 1fr;
       }
+      
+      .bank-details-content {
+        grid-template-columns: 1fr;
+      }
     }
     
     @media (max-width: 480px) {
@@ -753,7 +805,7 @@ footer {
       <img src="IMAGES/logo.png" alt="Haya Ngizwe Events Logo" class="logo-image">
     </a>
     <div class="menu-toggle" id="mobile-menu">
-        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
     </div>
     <nav class="nav-menu">
       <a href="index.html">Home</a>
@@ -767,7 +819,7 @@ footer {
     </nav>
   </header>
 
-  <!-- Celebration Animation Container -->
+    <!-- Celebration Animation Container -->
   
   <div class="celebration" id="celebration"></div>
 
@@ -820,7 +872,7 @@ footer {
       <p>Fill out the form below with details about your collaboration idea. Our team will review and get back to you within 2-3 business days.</p>
     </div>
     
-  <form name="contact" method="POST" action="https://formspree.io/f/xnngaqqw">
+  <form id="collaborationForm" name="contact" method="POST" action="https://formspree.io/f/xnngaqqw">
       <!-- Personal Information Section -->
       <div class="form-section">
         <div class="section-title">
@@ -911,7 +963,7 @@ footer {
   </div>
 </div>
 
-<!-- NEW: Donation Section -->
+<!-- UPDATED: Donation Section -->
 <div class="form-section">
   <div class="section-title">
     <i class="fas fa-heart"></i>
@@ -924,42 +976,78 @@ footer {
   </div>
   
   <div class="donation-section" id="donationSection">
-    <p style="margin-bottom: 1rem; color: #8e0000; font-weight: 600;">
+    <p style="margin-bottom: 1rem; color: #8e0000; font-weight: 600; text-align: center;">
       <i class="fas fa-hand-holding-heart"></i> Thank you for considering a donation! Your support helps us continue our work with emerging artists.
     </p>
     
+    <p style="text-align: center; margin-bottom: 1rem; color: #666;">
+      Donations can be as little as <strong>R5</strong> and can be sent via bank transfer using the details below:
+    </p>
+    
+    <!-- Bank Details Section -->
+    <div class="bank-details">
+      <h4><i class="fas fa-university"></i> Bank Transfer Details</h4>
+      <div class="bank-details-content">
+        <div class="bank-item">
+          <strong>Account Holder</strong>
+          <span>HN EVENTS</span>
+        </div>
+        <div class="bank-item">
+          <strong>Bank Name</strong>
+          <span>TymeBank</span>
+        </div>
+        <div class="bank-item">
+          <strong>Branch Code</strong>
+          <span>678910</span>
+        </div>
+        <div class="bank-item">
+          <strong>Account Number</strong>
+          <span>53002388516</span>
+        </div>
+      </div>
+      <button type="button" class="copy-btn" id="copyBankDetails">
+        <i class="far fa-copy"></i> Copy Bank Details
+      </button>
+    </div>
+    
     <div class="donation-options">
+      <div class="donation-option" data-amount="5">
+        <div class="donation-amount">R5</div>
+        <small>Every bit helps!</small>
+      </div>
+      
+      <div class="donation-option" data-amount="50">
+        <div class="donation-amount">R50</div>
+        <small>Supports materials</small>
+      </div>
+      
+      <div class="donation-option" data-amount="100">
+        <div class="donation-amount">R100</div>
+        <small>Helps with promotion</small>
+      </div>
+      
       <div class="donation-option" data-amount="500">
         <div class="donation-amount">R500</div>
-        <small>Supports one emerging artist</small>
-      </div>
-      
-      <div class="donation-option" data-amount="1000">
-        <div class="donation-amount">R1,000</div>
-        <small>Helps with venue costs</small>
-      </div>
-      
-      <div class="donation-option" data-amount="2500">
-        <div class="donation-amount">R2,500</div>
-        <small>Sponsors sound equipment</small>
+        <small>Supports an artist</small>
       </div>
       
       <div class="donation-option donation-custom">
         <div class="donation-amount">Custom Amount</div>
-        <input type="number" id="customAmount" name="customAmount" class="custom-amount" placeholder="Enter amount" min="50" step="50">
-        <small>Any amount makes a difference!</small>
+        <input type="number" id="customAmount" name="customAmount" class="custom-amount" placeholder="Enter amount (min R5)" min="5" step="1">
+        <small>Enter any amount from R5</small>
       </div>
     </div>
     
-    <div class="form-group" style="margin-top: 1rem;">
-      <label for="donationPurpose"><i class="fas fa-bullseye"></i> Donation Purpose (Optional)</label>
+    <div class="form-group" style="margin-top: 1.5rem;">
+      <label for="donationPurpose"><i class="fas fa-bullseye"></i> Where should we allocate your donation? (Optional)</label>
       <select id="donationPurpose" name="donationPurpose" class="form-control">
-        <option value="" selected>Where should we allocate your donation?</option>
+        <option value="" selected>Select donation purpose</option>
         <option value="artist-support">Artist Support & Development</option>
         <option value="event-production">Event Production Costs</option>
         <option value="community-outreach">Community Outreach Programs</option>
         <option value="equipment">Equipment & Technology</option>
         <option value="general-fund">General Operating Fund</option>
+        <option value="any">Anywhere it's needed most</option>
       </select>
     </div>
     
@@ -970,11 +1058,11 @@ footer {
     
     <div class="checkbox-group">
       <input type="checkbox" id="receiptNeeded" name="receiptNeeded">
-      <label for="receiptNeeded">I need a donation receipt for tax purposes</label>
+      <label for="receiptNeeded">I need a donation receipt for tax purposes (Please ensure you include your email above)</label>
     </div>
     
-    <p style="font-size: 0.9rem; color: #666; margin-top: 1rem; font-style: italic;">
-      <i class="fas fa-info-circle"></i> Donations are processed securely. You'll receive a confirmation email with payment instructions.
+    <p style="font-size: 0.9rem; color: #666; margin-top: 1rem; font-style: italic; text-align: center;">
+      <i class="fas fa-info-circle"></i> After submitting your proposal, please make your donation directly to our bank account. Include your name as reference.
     </p>
   </div>
 </div>
@@ -1041,6 +1129,7 @@ footer {
   <i class="fas fa-check-circle"></i>
   <h3>Proposal Submitted Successfully!</h3>
   <p>Thank you for your collaboration proposal. Our team will review it and get back to you within 2-3 business days.</p>
+  <p>If you included a donation, please remember to transfer it to our bank account. Thank you for your support!</p>
   <p>In the meantime, feel free to explore our <a href="events.html">upcoming events</a> or <a href="gallery.html">gallery</a>.</p>
 </div>
 </div>
@@ -1050,8 +1139,8 @@ footer {
   Creating Moments to Cherish Forever · <br>
   Collaboration inquiries: hayangizwe@gmail.com
 </footer>
-  <script>
-    // Mobile Menu Toggle
+    <script>
+    // Mobile Menu Toggle (Same as about.html)
     const menu = document.querySelector('#mobile-menu');
     const navMenu = document.querySelector('.nav-menu');
     menu.addEventListener('click', () => navMenu.classList.toggle('active'));
@@ -1060,11 +1149,6 @@ footer {
     document.addEventListener('DOMContentLoaded', function() {
       // Create confetti effect on page load
       createConfetti();
-      
-      // Play welcome sound (optional - commented out)
-      // const welcomeSound = new Audio('sounds/welcome.mp3');
-      // welcomeSound.volume = 0.3;
-      // welcomeSound.play();
       
       // Typewriter effect for welcome message
       const welcomeText = document.querySelector('.welcome-text h1');
@@ -1199,6 +1283,46 @@ footer {
     customAmountInput.addEventListener('focus', function() {
       // Remove selected class from all options
       donationOptions.forEach(opt => opt.classList.remove('selected'));
+      
+      // Set minimum value
+      if (!this.value || parseInt(this.value) < 1) {
+        this.value = '1';
+      }
+    });
+    
+    customAmountInput.addEventListener('input', function() {
+      if (this.value && parseInt(this.value) < 1) {
+        this.value = '1';
+      }
+    });
+
+    // Copy Bank Details Functionality
+    const copyBankDetailsBtn = document.getElementById('copyBankDetails');
+    
+    copyBankDetailsBtn.addEventListener('click', function() {
+      const bankDetails = `Account Holder: HN EVENTS\nBank Name: TymeBank\nBranch Code: 678910\nAccount Number: 53002388516`;
+      
+      // Create temporary textarea to copy text
+      const textarea = document.createElement('textarea');
+      textarea.value = bankDetails;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      
+      // Visual feedback
+      const originalText = this.innerHTML;
+      this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+      this.classList.add('copied');
+      
+      // Reset button after 2 seconds
+      setTimeout(() => {
+        this.innerHTML = originalText;
+        this.classList.remove('copied');
+      }, 2000);
+      
+      // Celebrate!
+      createConfetti();
     });
 
     // Form Submission Handling
@@ -1227,6 +1351,17 @@ footer {
         }
       });
       
+      // Validate custom donation amount if selected
+      if (includeDonation.checked) {
+        const selectedOption = document.querySelector('.donation-option.selected');
+        if (!selectedOption && (!customAmountInput.value || parseInt(customAmountInput.value) < 5)) {
+          isValid = false;
+          customAmountInput.style.borderColor = '#ff0000';
+          alert('Please select a donation amount or enter a custom amount of at least R5');
+          return;
+        }
+      }
+      
       if (!isValid) {
         // Play error sound
         const errorSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-warning-alarm-buzzer-985.mp3');
@@ -1250,11 +1385,18 @@ footer {
         }
         
         if (amount) {
-          donationDetails = `\n\nDonation Details:\nAmount: ${amount}`;
+          donationDetails = `\n\nDONATION INTENT:\nAmount: ${amount}`;
           const purpose = document.getElementById('donationPurpose').value;
           if (purpose) {
             donationDetails += `\nPurpose: ${purpose}`;
           }
+          donationDetails += `\n\nBANK DETAILS FOR TRANSFER:\nAccount Holder: HN EVENTS\nBank: TymeBank\nBranch: 678910\nAccount: 53002388516\n\nPlease include your name as reference when making the transfer.`;
+          
+          const anonymous = document.getElementById('anonymousDonation').checked;
+          const receipt = document.getElementById('receiptNeeded').checked;
+          
+          donationDetails += `\nAnonymous: ${anonymous ? 'Yes' : 'No'}`;
+          donationDetails += `\nReceipt Needed: ${receipt ? 'Yes' : 'No'}`;
         }
       }
       
